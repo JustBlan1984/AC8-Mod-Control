@@ -1,0 +1,36 @@
+CRIMINALGAMER84'S AC8 MOD CONTROL 1.0.0
+
+QUICK START
+1. Install a compatible, working UE4SS setup first. This download does not include UE4SS.
+2. If you have never started a campaign, start New Game once, let it initialize and save, then exit the game.
+3. Run AC8 Mod Launcher.exe and select your actual ACE COMBAT 8 installation folder.
+4. Choose your mods and click Apply Selected Mods. The game must be closed. Your current save is backed up automatically.
+5. For modded single-player, check No EAC launch and click Launch Game. Enter your campaign. Let the game save normally before exiting.
+6. Open the hangar normally to use aircraft, skins and weapons. No F4/F7 presses are required in the tested workflow.
+
+The launcher need not be opened on every play session, but its installed scripts must remain available for the FOV overlay, automatic loadout initialization, and DLC compatibility handling. Use a launch route compatible with your installed mods.
+
+OPTIONS
+Mission access: Unlock ALL Missions is first, followed by Prologue and Mission 1 through Mission 30. Numbered choices are cumulative. Existing later unlocks are preserved, not removed. Also sets the Free Mission, Free Flight, Training, Music Player and Data Viewer feature flags. A feature flag does not guarantee every feature appears as a top-level menu entry.
+Aircraft, skins and SP weapons: combined selection. Ownership and skins apply automatically; weapon lists are repaired as the game creates aircraft records. No story completion, scores or achievements are fabricated by these scripts.
+FOV overlay: F10 during unpaused flight; Page Up/Page Down adjust, End resets. Saved independently per view.
+DLSS: Enable DLSS applies the supplied Streamline, DLSS Frame Generation and Reflex INI settings. Native NVIDIA DLSS Quality became selectable on the tested RTX 5070 Ti setup. Frame Generation and Reflex operation were not independently verified. Intended for use without a DLSS swapper.
+No EAC launch: direct single-player executable launch. Unchecked uses Steam's existing settings. Does not uninstall EAC or alter Steam launch options.
+
+BACKUPS / REMOVAL
+Back Up Current Save creates a ZIP of the current Windows user's SaveGames directory. No author's save is included.
+Save and Engine.ini backups: %LOCALAPPDATA%\AC8 Mod Launcher\Backups
+Existing installed scripts: %LOCALAPPDATA%\AC8 Mod Launcher\Install-backup-<timestamp>
+Uncheck a mod and Apply Selected Mods to disable that script. Saved unlocks are not reversed. To revert progress changes, close the game and restore an appropriate backup manually, keeping a copy of the current save first. Take care with Steam Cloud conflicts.
+Disable DLSS tweak restores the previous Engine.ini only if it has not subsequently changed; otherwise restoration stops to preserve newer edits.
+
+COMPATIBILITY / TEST COVERAGE
+Developed on Windows against Steam build 25201480 and campaign save version 38. Requires the standard user-local save location. Game updates may require changes.
+Verified during testing: full mission list through Mission 30, Mission 3 gameplay load, FOV overlay, native DLSS menu availability, and user-confirmed populated aircraft/skin/weapon menus on the fresh-campaign test. Individual mission cutoffs after Mission 6 and every mission/aircraft combination have not been exhaustively tested.
+The mod initializes after entering a campaign, not merely reaching the title screen. If no changes appear, enter the campaign and check UE4SS.log before repeating installation. Manual diagnostic fallbacks remain F4 twice within 15 seconds for missions and F7 in the hangar for aircraft.
+
+USE AT YOUR OWN RISK
+Intended for offline/single-player use. Online use is not recommended and may result in restrictions or bans. You are responsible for how you use these mods. This does not fix multiplayer restrictions.
+
+CREDITS
+CriminalGamer84. UE4SS and its contributors provide the separately installed modding framework. The EXE uses Python, Tcl/Tk and PyInstaller; third-party notices are included where available. No game binaries, NVIDIA DLLs, UE4SS runtime, personal saves or logs are included.
