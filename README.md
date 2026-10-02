@@ -1,45 +1,34 @@
 # CriminalGamer84's AC8 Mod Control
 
-Windows launcher for selectable ACE COMBAT 8 mods: mission access, aircraft/skins/SP weapons, FOV overlay, save backups, optional DLSS configuration, and optional direct single-player launch.
+## Version 1.1.1 — Single EXE Windows launcher
 
-## Version 1.1.0 — C#/.NET Windows launcher
+[Download 1.1.1](https://github.com/JustBlan1984/AC8-Mod-Control/releases/tag/v1.1.1) · [Build instructions](native/BUILD.md) · [User guide](native/HOW%20TO%20USE.txt)
 
-[Download 1.1.0](https://github.com/JustBlan1984/AC8-Mod-Control/releases/tag/v1.1.0) · [Build instructions](native/BUILD.md) · [User guide](native/HOW%20TO%20USE.txt)
+Download the EXE from the release assets and run it. The launcher, Microsoft .NET runtime and all 15 Lua scripts are included. No surrounding runtime folder or separate Python/.NET installation is required. Supporting files extract automatically on startup. UE4SS must still be installed separately.
 
-The launcher has been rewritten in C# using Windows Forms. Python and PyInstaller are no longer used in 1.1.0. The Windows x64 package includes the .NET runtime and supporting files; **extract the entire ZIP and keep the files together**. The EXE is not a standalone file. A separate .NET installation is not required.
+### Setup
 
-All 15 bundled Lua files match the original 1.0.0 release. The original backup location and Python launcher's DLSS restore record remain supported.
+1. Install compatible UE4SS separately. Start a campaign once if needed, let it save, then close the game.
+2. Run the downloaded EXE and choose your game folder.
+3. Use **Back Up Current Save**, select your mods, then **Apply Selected Mods**.
+4. Launch using a route compatible with your mods. Load the campaign and let the game save. F10 opens the FOV overlay during active, unpaused flight.
 
-### Validation and security status
+Features include mission access, aircraft/skin/SP weapon unlocks, FOV overlay, verified save backups, optional DLSS settings, and optional direct single-player launch. Existing backups and older DLSS restore records remain supported.
 
-- Thirty isolated checks passed, including save backups, mod installation/disable, DLSS restoration, legacy restore records, launch configuration and running-game guards.
-- The published EXE initialized successfully and its UI was rendered and inspected.
-- A local Microsoft Defender custom scan of the published folder reported no threats on October 1, 2026.
-- **The author confirmed successful in-game testing on October 1, 2026. VirusTotal results and Nexus clearance for 1.1.0 remain pending.** A local scan is not proof of safety, and a rewrite does not establish that previous detections were false positives.
+**Open Backups** opens `%LOCALAPPDATA%\AC8 Mod Launcher\Backups`. Use offline/single-player only. Disabling scripts does not reverse changes already saved to a campaign.
 
-The old 1.0.0 binary download was withdrawn. Its source, build documentation, scan reports and verification tools remain available for review. Historical 1.0.0 VirusTotal results do not describe the new 1.1.0 files.
+### Verification and scan status
 
-## Setup
+The author confirmed successful in-game testing of this single EXE on October 1, 2026. All 30 isolated checks passed. Standalone startup and all 15 extracted Lua files were verified. This does not establish exhaustive testing of every feature or aircraft.
 
-1. Install a compatible UE4SS runtime separately. UE4SS and game files are not included.
-2. If needed, start a campaign once and let the game save, then close it.
-3. Extract the entire release ZIP and run **AC8 Mod Control.exe**.
-4. Select the game installation folder. Use **Back Up Current Save** before applying changes; **Apply Selected Mods** also makes a verified backup.
-5. Choose the mods and mission access, apply, then launch and load the campaign. Open the hangar normally and let the game save. F10 opens the FOV overlay in active unpaused flight.
+Nexus displayed scanning in progress when 1.1.1 was uploaded. No antivirus clearance is claimed for this EXE. Earlier scan reports concern different files; changing packaging does not prove previous detections were false positives.
 
-Backups: **Open Backups**, or `%LOCALAPPDATA%\AC8 Mod Launcher\Backups`.
+### Source and credits
 
-Use offline/single-player only. Online use is not recommended. Disabling scripts does not remove saved unlocks; completely removing the scripts has not been verified for every aircraft/loadout. Mission cutoffs after Mission 6 still need in-game verification.
+[Current C# source and tests](native/) include build instructions. The release source ZIP is for building/review, not running. Original Python source and review records remain in `src/`, `docs/`, and the root `BUILD.md` for historical review.
 
-## Source map
-
-- [Current C# launcher and tests](native/)
-- [Current build and review notes](native/BUILD.md)
-- [Original Python launcher and Lua source](src/)
-- [Original 1.0.0 build instructions](BUILD.md)
-- [Original 1.0.0 security review](docs/SECURITY-REVIEW.md)
-- [Original release manifest](release-manifest.json)
+Created by CriminalGamer84 with AI assistance. Thanks to UE4SS contributors for the separately required framework and Microsoft/.NET contributors for the included runtime. Runtime licenses and third-party notices are bundled and extracted with the application; their respective licenses apply.
 
 [Nexus Mods page](https://www.nexusmods.com/acecombat8wingsoftheve/mods/9)
 
-Public source availability does not grant a blanket redistribution license. Third-party components retain their upstream licenses.
+Version 1.1.0 is the older folder-based package. The 1.0.0 binary was withdrawn. Use 1.1.1 for the single EXE.
