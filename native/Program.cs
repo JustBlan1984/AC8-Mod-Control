@@ -26,12 +26,12 @@ public sealed class LauncherForm : Form
     bool busy;
     public LauncherForm()
     {
-        Text="AC8 | MOD CONTROL — 1.1.1"; ClientSize=new Size(840,920); MinimumSize=new Size(700,650);
+        Text="AC8 | MOD CONTROL — 1.1.2"; ClientSize=new Size(840,920); MinimumSize=new Size(700,650);
         StartPosition=FormStartPosition.CenterScreen; BackColor=panel; ForeColor=green;
         Font=new Font("Segoe UI",10); AutoScaleMode=AutoScaleMode.Dpi;
         content.BackColor=panel; Controls.Add(content);
         AddLabel("AC8 / MOD CONTROL",24,true);
-        AddLabel("CRIMINALGAMER84 MODS   /   1.1.1   /   WINDOWS",10,true);
+        AddLabel("CRIMINALGAMER84 MODS   /   1.1.2   /   WINDOWS",10,true);
         AddLabel("Configure once. Load your campaign, then let the game save normally.");
         var warning=AddLabel("USE AT YOUR OWN RISK\nFor offline / single-player use. Online use is not recommended and may result in account restrictions or bans."); warning.ForeColor=Color.FromArgb(227,187,112);
         Section("INSTALLATION");
@@ -41,8 +41,8 @@ public sealed class LauncherForm : Form
         Row(game,Button("Browse",()=> { using var dialog=new FolderBrowserDialog { Description="Select the ACE COMBAT 8 installation folder", UseDescriptionForTitle=true }; if (dialog.ShowDialog(this)==DialogResult.OK) game.Text=dialog.SelectedPath; }));
         Section("MOD SELECTION");
         string[] labels=["FOV overlay — F10 in flight","Aircraft, skins and SP weapons — automatic repair","Mission access"];
-        for(int i=0;i<3;i++) { choices[i]=new CheckBox { Text=labels[i],Checked=true,AutoSize=true,Margin=new Padding(0,7,0,7) }; content.Controls.Add(choices[i]); }
-        mission.Items.AddRange(ModService.Missions); mission.SelectedIndex=0; content.Controls.Add(mission);
+        for(int i=0;i<3;i++) { choices[i]=new CheckBox { Text=labels[i],Checked=false,AutoSize=true,Margin=new Padding(0,7,0,7) }; content.Controls.Add(choices[i]); }
+        mission.Items.AddRange(ModService.Missions); mission.SelectedIndex=0; mission.Enabled=false; content.Controls.Add(mission);
         choices[2].CheckedChanged+=(_,_)=>mission.Enabled=choices[2].Checked;
         AddLabel("Also enables campaign features including Free Mission, Free Flight and Data Viewer. Existing later unlocks remain. Cutoffs after Mission 6 still need in-game verification.");
         Section("LAUNCH MODE"); content.Controls.Add(noEac);
@@ -53,7 +53,7 @@ public sealed class LauncherForm : Form
         Section("SAVE BACKUP / APPLY");
         Row(Button("Back Up Current Save",()=>RunWork(()=>"Backup verified: "+service.Backup())),Button("Open Backups",()=> { Directory.CreateDirectory(service.Backups); Process.Start(new ProcessStartInfo(service.Backups){UseShellExecute=true}); }));
         Row(Button("Apply Selected Mods",Apply),Button("Launch Game",Launch));
-        AddLabel("Requires a working UE4SS installation and a campaign save. Unchecking a mod disables its script; it does not reverse saved unlocks. Open the hangar normally after applying.");
+        AddLabel("Requires UE4SS and a campaign save. Enter the hangar and wait about 5–10 seconds. If SP weapons or skins remain locked, select the aircraft, wait another 5–10 seconds, then back out and reopen its loadout. F7 is a manual fallback. Unchecking a mod does not reverse saved unlocks.");
         status.ForeColor=Color.FromArgb(213,232,207); status.Margin=new Padding(0,16,0,20); content.Controls.Add(status);
         content.SizeChanged+=(_,_)=> { int width=Math.Max(500,content.ClientSize.Width-70); foreach(Control c in content.Controls) if(c is Label label) label.MaximumSize=new Size(width,0); game.Width=Math.Max(340,width-115); };
         FormClosing+=(_,e)=> { if(busy) { e.Cancel=true; MessageBox.Show(this,"Please wait for the current operation to finish before closing.","AC8 Mod Control"); } };

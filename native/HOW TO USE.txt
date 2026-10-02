@@ -1,5 +1,8 @@
-AC8 Mod Control 1.1.1 - Single EXE
+AC8 Mod Control 1.1.2 - Single EXE
 Run AC8 Mod Control.exe. No separate Python or .NET installation is needed.
 The EXE contains the runtime and all 15 mod scripts. Microsoft .NET extracts its contents into your temporary .net cache on launch. UE4SS is still required separately.
 Use Back Up Current Save before applying changes. Open Backups shows your backups.
 Offline/single-player only. No antivirus or Nexus clearance is claimed for this build.
+
+Close the game, choose your options and click Apply Selected Mods once to install this update. Launch and load or create a campaign normally.
+Enter the campaign hangar and wait about 5–10 seconds before selecting an aircraft. If SP weapons or skins remain locked, select that aircraft, wait another 5–10 seconds, then back out and reopen its weapon/skin selection. The game must create each aircraft's loadout data before the mod can update it. No F7 press is normally needed. Let the game save normally.
