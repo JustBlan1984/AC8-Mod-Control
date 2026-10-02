@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><OutputType>WinExe</OutputType><TargetFramework>net10.0-windows</TargetFramework><UseWindowsForms>true</UseWindowsForms><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable><StartupObject>UiSmoke</StartupObject></PropertyGroup>
+ <ItemGroup><Compile Include="../../ModService.cs" Link="ModService.cs" /><Compile Include="../../Program.cs" Link="Launcher.cs" /></ItemGroup>
+</Project>
