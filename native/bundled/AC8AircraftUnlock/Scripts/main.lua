@@ -21,11 +21,10 @@ local function inspect()
  local options=loader and loader() or {}
  return save,map,owned,core.plan(rows,owned,options)
 end
-local function repair()
+local function repairNow()
  if busy then return end
  busy=true
- ExecuteInGameThread(function()
-  local ok,err=pcall(function()
+ local ok,err=pcall(function()
    local save,map,owned,ids=inspect()
    if #ids==0 then
     log('All configured catalog aircraft already have ownership entries.')
@@ -48,41 +47,69 @@ local function repair()
   end)
   busy=false
   if not ok then log('Stopped: '..tostring(err)) end
- end)
+  return ok
+end
+local function repair()
+ local ok,err=pcall(ExecuteInGameThread,repairNow)
+ if not ok then log('Could not schedule repair: '..tostring(err)) end
 end
 RegisterKeyBind(Key.F7,repair)
 log('Campaign mod ready. DLC compatibility initializes automatically; F7 repairs aircraft ownership and loadouts.')
 
 assert(loadfile(directory..'DLC-load-support.lua'))().start(directory,log)
 
--- Never allocate or replace aircraft-record structs. Observe game-owned records.
-local lastSignature=nil
+-- Never allocate aircraft-record structs; repair records created by the game.
+local lastSignature,stableSignature,lastError=nil,nil,nil
 local autoPending=false
+local function signature(save)
+ local parts={tostring(save:GetAddress())}
+ save.CommonSaveData.OwnedAircrafts:ForEach(function(k,v)
+  parts[#parts+1]='o'..k:get()..'='..v:get()
+ end)
+ save.CampaignSaveData.AircraftTypeRecords:ForEach(function(_,v)
+  local record=v:get()
+  local weapons={}
+  record.OwnedWeapons:ForEach(function(_,w) weapons[#weapons+1]=w:get() end)
+  table.sort(weapons)
+  parts[#parts+1]='r'..record.PlaneID..'='..table.concat(weapons,',')
+ end)
+ save.CommonSaveData.UnlockedSkinIdList:ForEach(function(_,v) parts[#parts+1]='s'..v:get() end)
+ table.sort(parts)
+ return table.concat(parts,';')
+end
 LoopAsync(2000,function()
  if autoPending or busy then return false end
  autoPending=true
- ExecuteInGameThread(function()
+ local queued,queueError=pcall(ExecuteInGameThread,function()
   local ok,err=pcall(function()
-   local managers=FindAllOf('LiveSaveDataManager') or {}
-   if #managers~=1 then return end
-   local save=managers[1].CampaignSaveGame
-   if not save or not save:IsValid() or save.SavedVersion~=38 then return end
-   local ids={};save.CampaignSaveData.AircraftTypeRecords:ForEach(function(_,v)ids[#ids+1]=v:get().PlaneID end)
-   -- A single starter aircraft is valid. Avoid the temporary startup save by
-   -- waiting for a visible campaign/hangar menu instead of counting aircraft.
-   if not assert(loadfile(directory..'Campaign-ready.lua'))()() then return end
-   table.sort(ids)
-   local signature=tostring(save:GetAddress())..':'..table.concat(ids,',')
-   if signature==lastSignature then return end
-   local dt=StaticFindObject('/Game/Datatables/Player/DT_LiveAircraft.DT_LiveAircraft')
+   if not assert(loadfile(directory..'Campaign-ready.lua'))()() then
+    stableSignature=nil;lastSignature=nil;return
+   end
+   local save=inspect()
    local skins=StaticFindObject('/Game/Datatables/Information/DT_Skin.DT_Skin')
-   if not dt or not dt:IsValid() or not skins or not skins:IsValid() then return end
-   lastSignature=signature
-   log('Automatic repair of game-created aircraft records starting.')
-   repair()
+   if not skins or not skins:IsValid() then stableSignature=nil;return end
+   local current=signature(save)
+   if current==lastSignature then return end
+   if current~=stableSignature then stableSignature=current;return end
+   log('Automatic aircraft ownership and loadout repair starting.')
+   if repairNow() then
+    -- Record success only after repair completes; failures retry next tick.
+    lastSignature=signature(save)
+    stableSignature=lastSignature
+    log('Automatic aircraft repair verified; normal game saving is still required.')
+   end
   end)
   autoPending=false
-  if not ok then log('Automatic readiness check: '..tostring(err)) end
+  if not ok then
+   stableSignature=nil
+   if tostring(err)~=lastError then log('Automatic readiness check: '..tostring(err)) end
+   lastError=tostring(err)
+  else lastError=nil end
  end)
+ if not queued then
+  autoPending=false;stableSignature=nil
+  if tostring(queueError)~=lastError then log('Automatic scheduling: '..tostring(queueError)) end
+  lastError=tostring(queueError)
+ end
  return false
 end)
