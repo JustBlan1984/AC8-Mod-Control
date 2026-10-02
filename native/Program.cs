@@ -26,12 +26,12 @@ public sealed class LauncherForm : Form
     bool busy;
     public LauncherForm()
     {
-        Text="AC8 | MOD CONTROL — 1.1.0"; ClientSize=new Size(840,920); MinimumSize=new Size(700,650);
+        Text="AC8 | MOD CONTROL — 1.1.1"; ClientSize=new Size(840,920); MinimumSize=new Size(700,650);
         StartPosition=FormStartPosition.CenterScreen; BackColor=panel; ForeColor=green;
         Font=new Font("Segoe UI",10); AutoScaleMode=AutoScaleMode.Dpi;
         content.BackColor=panel; Controls.Add(content);
         AddLabel("AC8 / MOD CONTROL",24,true);
-        AddLabel("CRIMINALGAMER84 MODS   /   1.1.0   /   WINDOWS",10,true);
+        AddLabel("CRIMINALGAMER84 MODS   /   1.1.1   /   WINDOWS",10,true);
         AddLabel("Configure once. Load your campaign, then let the game save normally.");
         var warning=AddLabel("USE AT YOUR OWN RISK\nFor offline / single-player use. Online use is not recommended and may result in account restrictions or bans."); warning.ForeColor=Color.FromArgb(227,187,112);
         Section("INSTALLATION");
@@ -106,3 +106,4 @@ public sealed class LauncherForm : Form
         status.Text=noEac.Checked?"Direct single-player launch requested without the EAC launcher.":"Launch requested through Steam.";
     }
 }
+

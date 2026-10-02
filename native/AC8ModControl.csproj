@@ -6,13 +6,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AssemblyName>AC8 Mod Control</AssemblyName>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
-    <PublishSingleFile>false</PublishSingleFile>
+    <PublishSingleFile>true</PublishSingleFile><IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract><DebugType>none</DebugType><DebugSymbols>false</DebugSymbols>
     <PublishTrimmed>false</PublishTrimmed>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="tests/**/*.cs" />
     <Content Include="bundled/**/*" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-  </ItemGroup>
+  <Content Include="notices/**/*" CopyToPublishDirectory="PreserveNewest" /><Content Include="HOW TO USE.txt" CopyToPublishDirectory="PreserveNewest" /></ItemGroup>
 </Project>
+
+

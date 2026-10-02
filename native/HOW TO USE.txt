@@ -1,24 +1,5 @@
-AC8 MOD CONTROL 1.1.0 — WINDOWS LAUNCHER
-
-This C#/.NET launcher replaces the Python launcher. The author confirmed successful in-game testing. Security review remains pending.
-
-1. Extract the ENTIRE ZIP into a folder. Keep AC8 Mod Control.exe, the DLLs, and bundled folder together. Do not run from inside the ZIP or copy just the EXE.
-2. Requires Windows x64, ACE COMBAT 8, and a working, separately installed UE4SS runtime. No Python or separate .NET installation is required.
-3. If you have never started a campaign, start New Game once, allow it to save, then close the game.
-4. Run AC8 Mod Control.exe. Confirm or browse to the game installation folder.
-5. Use Back Up Current Save before changing your configuration. Apply Selected Mods also automatically creates and verifies a backup.
-6. Choose the desired mods. Mission access is cumulative; Unlock ALL Missions is the first choice. Individual cutoffs after Mission 6 still need game verification.
-7. Apply Selected Mods. For modded offline play choose the appropriate No EAC launch setting, then Launch Game. Normal launch uses your existing Steam settings.
-8. Load the campaign and open the hangar normally. Allow the game to save before exiting. F10 opens the FOV overlay in active unpaused flight.
-
-Save backups: click Open Backups, or browse to
-%LOCALAPPDATA%\AC8 Mod Launcher\Backups
-
-Existing mod-file backups:
-%LOCALAPPDATA%\AC8 Mod Launcher\Install-backup-<timestamp>
-
-The original launcher's backup folder and DLSS restore record are supported. Unchecking mods disables scripts but does not remove saved unlocks. Keep scripts installed for FOV and automatic compatibility/loadout handling. Removing all scripts has not been verified for every aircraft/loadout.
-
-Enable DLSS changes Streamline INI settings; it does not install NVIDIA plugins or swap DLLs. Disable DLSS tweak restores the previous INI only if it has not subsequently changed. Game must be closed for graphics changes.
-
-Use at your own risk. Offline/single-player only; online use is not recommended. Changing launcher packaging does not guarantee antivirus clearance. Do not disable antivirus protection to run it.
+AC8 Mod Control 1.1.1 - Single EXE
+Run AC8 Mod Control.exe. No separate Python or .NET installation is needed.
+The EXE contains the runtime and all 15 mod scripts. Microsoft .NET extracts its contents into your temporary .net cache on launch. UE4SS is still required separately.
+Use Back Up Current Save before applying changes. Open Backups shows your backups.
+Offline/single-player only. No antivirus or Nexus clearance is claimed for this build.
