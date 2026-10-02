@@ -84,9 +84,9 @@ local function inspect()
  log('Story position unchanged: played='..tostring(p.data.LastPlayedMissionID)..', completed='..tostring(p.data.LastCompletedMissionID))
  return p
 end
-local function apply()
- local p=prepare()
- if not pending or pending.signature~=p.signature or os.time()>pending.expires then
+local function apply(automaticPlan)
+ local p=automaticPlan or prepare()
+ if not automaticPlan and (not pending or pending.signature~=p.signature or os.time()>pending.expires) then
   pending={signature=p.signature,expires=os.time()+15}
   notice('Unlock access to missions '..table.concat(p.numbers,',')..'? Press F4 again within 15 seconds. No completion or story changes.')
   return
@@ -128,23 +128,51 @@ RegisterKeyBind(Key.F4,function()run(apply)end)
 log('Mission access mod loaded. Configured automatic application is enabled; F9 previews, F4 twice is a manual fallback.')
 ExecuteWithDelay(8000,function()run(inspect)end)
 
-local autoApplied=false
+-- Keep checking after success: New Game/save loading can replace the live
+-- campaign or reset its arrays. Only write when the desired state is missing.
 local autoPending=false
+local autoStableSignature=nil
+local autoStableSave=nil
+local autoLastError=nil
+local autoReady=assert(loadfile(dir..'Campaign-ready.lua'))()
 LoopAsync(2000,function()
- if autoApplied then return true end
  if autoPending then return false end
  autoPending=true
- ExecuteInGameThread(function()
-  local ok=pcall(function()
+ local queued,queueError=pcall(ExecuteInGameThread,function()
+  local ok,err=pcall(function()
    local cfg=assert(loadfile(dir..'Mission-config.lua'))()
-   if not cfg.AutoApply then autoApplied=true;return end
-   local p=prepare();local count=0
-   p.data.AircraftTypeRecords:ForEach(function()count=count+1 end)
-   if not assert(loadfile(dir..'Campaign-ready.lua'))()() then return end
-   apply();apply();autoApplied=true
-   log('Automatic mission access applied; normal game saving is still required.')
+   if not cfg.AutoApply or not autoReady() then
+    autoStableSignature=nil;autoStableSave=nil;return
+   end
+   local p=prepare()
+   local featureBits=(1 << 7) | (1 << 8) | (1 << 11) | (1 << 12) | (1 << 13)
+   local signature=p.signature..'|'..tostring(p.data.FeatureFlagMask)
+   -- Require two consecutive stable samples before writing during loading.
+   local saveID=p.save:GetFullName()
+   if autoStableSignature~=signature or autoStableSave~=saveID then
+    autoStableSignature=signature;autoStableSave=saveID;return
+   end
+   local needsApply=(p.data.FeatureFlagMask & featureBits)~=featureBits
+   for _,plan in ipairs(p.plans) do
+    if not same(plan.old,plan.new) then needsApply=true end
+   end
+   if needsApply then
+    apply(p)
+    autoStableSignature=nil
+    log('Automatic mission access applied and verified; normal game saving is still required.')
+   end
   end)
+  if not ok then
+   autoStableSignature=nil;autoStableSave=nil
+   if autoLastError~=tostring(err) then log('Automatic unlock waiting/retrying: '..tostring(err)) end
+   autoLastError=tostring(err)
+  else autoLastError=nil end
   autoPending=false
  end)
+ if not queued then
+  autoPending=false;autoStableSignature=nil;autoStableSave=nil
+  if autoLastError~=tostring(queueError) then log('Automatic unlock scheduling failed; retrying: '..tostring(queueError)) end
+  autoLastError=tostring(queueError)
+ end
  return false
 end)
