@@ -1,62 +1,68 @@
 # CriminalGamer84's AC8 Mod Control
 
+## 1.2.0 Experimental 4 — Custom MRP and Aircraft Tree
 
-## Version 1.1.2 - Single EXE Windows launcher
+**[Download the current build and matching source](https://github.com/JustBlan1984/AC8-Mod-Control/releases/tag/v1.2.0-experimental.4)** · [Nexus Mods](https://www.nexusmods.com/acecombat8wingsoftheve/mods/9)
 
+Download **AC8-Mod-Control-1.2.0-experimental.4.zip**, extract it, and run **AC8 Mod Control.exe**. This single Windows EXE includes its .NET runtime and mod scripts. No separate Python or .NET installation is needed. UE4SS must be installed separately.
 
-[Download 1.1.2](https://github.com/JustBlan1984/AC8-Mod-Control/releases/tag/v1.1.2)  /  [Build instructions](native/BUILD.md)  /  [User guide](native/HOW%20TO%20USE.txt)
+### Required UE4SS version
 
+Use **UE4SS Experimental v3.0.1-1152-ge3ba1016**, the exact build used for testing. Stable 3.0.1 and other builds are unverified.
 
-Download the EXE from the release assets and run it. The launcher, Microsoft .NET runtime and all 15 Lua scripts are included. No surrounding runtime folder or separate Python/.NET installation is required. Supporting files extract automatically on startup. UE4SS must still be installed separately.
+- [Download the tested UE4SS build](https://github.com/UE4SS-RE/RE-UE4SS/releases/download/experimental-latest/UE4SS_v3.0.1-1152-ge3ba1016.zip)
+- [Official UE4SS installation guide](https://docs.ue4ss.com/installation-guide.html)
 
+UE4SS goes alongside Game/Binaries/Win64/AceCombat8.exe. **The mod launcher can stay on your Desktop or another folder; it does not belong in the game folder.** The upstream Experimental download can change; retain the exact tested archive when available.
 
-### Setup
+### Setup — apply once, then play
 
+1. If you have no campaign save, start a campaign once, let it save, then close the game.
+2. Open the launcher and verify the detected game folder, or use **Browse**.
+3. Use **Back Up Current Save**. All mod options initially start unchecked. Select **every option you want enabled**; applying with an option unchecked disables its script.
+4. Set your MRP target and mission option if applicable, then click **Apply Selected Mods**. Apply also creates a verified save backup.
+5. Launch using your working mod-compatible offline/single-player route, enter the campaign hangar, and let the game save normally.
 
-1. Install **UE4SS Experimental v3.0.1-1152-ge3ba1016** separately: [download the exact tested build](https://github.com/UE4SS-RE/RE-UE4SS/releases/download/experimental-latest/UE4SS_v3.0.1-1152-ge3ba1016.zip). Use this Experimental build rather than stable 3.0.1; other builds are unverified. Start a campaign once if needed, let it save, then close the game.
-2. Run the downloaded EXE and choose your game folder.
-3. Use **Back Up Current Save**, select your mods, then **Apply Selected Mods**.
-4. Launch using a route compatible with your mods. Load the campaign and let the game save. F10 opens the FOV overlay during active, unpaused flight.
+**You do not need to keep the launcher open or Apply every session.** UE4SS loads the installed scripts on game startup. Keep UE4SS and the scripts installed for ongoing features such as FOV and loadout repair. Reapply when updating, changing selections, or changing your MRP target. The launcher's optional No EAC launch does not uninstall EAC or change Steam settings.
 
+### Custom MRP / Unlimited
 
-Features include mission access, aircraft/skin/SP weapon unlocks, FOV overlay, verified save backups, optional DLSS settings, and optional direct single-player launch. Existing backups and older DLSS restore records remain supported.
+Enable **MRP credits**, then choose **Custom amount** (1–999,999,999) or **Unlimited (999,999,999)**.
 
+This is a **minimum target balance, not an amount added on top**. Higher existing balances are preserved. **Unlimited sets a large balance once; purchases still deduct MRP. It is not an infinite balance or spending freeze.**
 
-**Open Backups** opens `%LOCALAPPDATA%\AC8 Mod Launcher\Backups`. Use offline/single-player only. Disabling scripts does not reverse changes already saved to a campaign.
+Credits apply once per Apply after a stable campaign hangar is available. Allow about 10–15 seconds after the hangar is ready, then back out and reopen the tree if its display is stale. **F6** retries/reapplies the installed target in the hangar. Reapplying can top the balance back up after spending.
 
+### Aircraft Tree and other features
 
-### Automatic unlocks and choosing mods
+- **Aircraft Tree access:** separate option that opens campaign tree nodes. Purchases remain separate and spend MRP; it does not grant purchased parts or enable Mission Access. A story milestone may still affect menu availability; its exact mission requirement is unconfirmed.
+- **Aircraft, skins and SP weapons:** enter the hangar and wait about 5–10 seconds. If a loadout is incomplete, select that aircraft, wait another 5–10 seconds, then reopen its loadout. **F7** is the manual fallback.
+- **Mission access:** independent of MRP/tree options. Leave it unchecked to retain normal mission progression. Existing saved unlocks remain. Individual mission cutoffs after Mission 6 have not all been verified in game.
+- **FOV overlay:** **F10 during active, unpaused flight**. Installed UE4SS scripts provide it; the launcher can be closed.
+- **DLSS settings:** optional INI changes, not a DLSS installer. Verify support in your setup.
 
+### Backups
 
-All mod checkboxes start unchecked. Select only the features you want; leave Mission access unchecked to retain normal mission progression. Aircraft and mission scripts are separate, although aircraft-only fresh-campaign gameplay has not yet been verified. Applying unchecked options disables those scripts; it does not reverse unlocks already saved.
+**Open Backups** opens %LOCALAPPDATA%\AC8 Mod Launcher\Backups. Disabling scripts does not undo changes already saved to your campaign. Preserve a pre-mod backup if you may want to revert.
 
+### Testing — October 2, 2026
 
-Enter the campaign hangar and wait about 5–10 seconds before selecting an aircraft. If SP weapons or skins remain locked, select the aircraft, wait another 5–10 seconds, then back out and reopen its weapon/skin selection. The game must create loadout records before they can be updated. F7 is a manual fallback, normally unnecessary.
+The author confirmed MRP and Aircraft Tree functionality, successful purchases, and that purchases remain after saving. Desktop testing visibly confirmed a custom **999,980,000 MRP** balance and preservation of a higher balance when a lower target was chosen. Installer checks passed for independent options, backups, custom/preset configuration and invalid target rejection.
 
+This remains experimental; every node, campaign stage and feature combination has not been tested. The exact tested EXE is published unchanged. Its embedded guide/footer predates the latest confirmation and still describes some tests as pending; these notes contain the current status.
 
-Version 1.1.2 fixes fresh-campaign automatic triggers and retries failed aircraft repairs. When upgrading, close the game and use Apply Selected Mods in the new launcher once. The EXE can stay on your Desktop; it does not belong in the game folder.
+### Source and build instructions
 
+Use **AC8-Mod-Control-1.2.0-experimental.4-source.zip** attached to the [current release](https://github.com/JustBlan1984/AC8-Mod-Control/releases/tag/v1.2.0-experimental.4) for the complete matching C#/Lua source, tests, licenses and **BUILD.md**. Use .NET SDK 10.0.401. Source archives are for building/review, not the playable download.
 
-### Verification and scan status
+The repository's native/ directory and automatically generated tag source archives currently retain the earlier launcher source. The explicitly named Experimental 4 source ZIP is the authoritative source package for this release. Historical Python code and review records remain in src/, docs/ and the root build/manifest files.
 
+### Scan disclosure
 
-The author confirmed automatic aircraft, SP weapon and skin unlocks with the updated scripts on October 1, 2026. Mission application was verified in the game log. All 30 isolated checks passed. Standalone startup and all 15 extracted Lua files were verified. This does not establish exhaustive testing of every feature or aircraft.
+**No VirusTotal result or Nexus approval has been verified for this exact Experimental 4 binary.** Earlier versions had unresolved detections and Nexus quarantine; those reports do not describe this file. No false-positive clearance is claimed. Keep antivirus enabled. SHA256SUMS.txt identifies the release files; checksums do not certify safety.
 
+### Credits
 
-**Version 1.1.2 is a new binary; no scan result or Nexus approval has been verified for it.** The following report is historical and applies only to 1.1.1. Nexus quarantined the 1.1.1 EXE. On October 1, 2026, [VirusTotal reported 1/70 detections](https://www.virustotal.com/gui/file/056b53e8b2d5d1ef3997c045809b9ac6e0828e4d0bd87597a591fc930555faa1): **Bkav Pro - W32.Malware.B0B0BDAF**. Microsoft reported **Undetected**. The cause remains unresolved; no false positive or security clearance has been confirmed. Earlier reports concern different files. Keep antivirus protection enabled.
+Created by **CriminalGamer84 with AI assistance**. Thanks to UE4SS contributors for the separately required framework and Microsoft/.NET contributors for the included runtime. Third-party notices are bundled with the EXE and source. No game binaries, UE4SS runtime, personal saves or private logs are distributed.
 
-
-### Source and credits
-
-
-[Current C# source and tests](native/) include build instructions. The release source ZIP is for building/review, not running. Original Python source and review records remain in `src/`, `docs/`, and the root `BUILD.md` for historical review.
-
-
-Created by CriminalGamer84 with AI assistance. Thanks to UE4SS contributors for the separately required framework and Microsoft/.NET contributors for the included runtime. Runtime licenses and third-party notices are bundled and extracted with the application; their respective licenses apply.
-
-
-[Nexus Mods page](https://www.nexusmods.com/acecombat8wingsoftheve/mods/9)
-
-
-Version 1.1.0 is the older folder-based package. The 1.0.0 binary was withdrawn. Use 1.1.2 for the updated single EXE.
-
+**Offline/single-player only. Use at your own risk.** Online use may result in account restrictions or bans.
