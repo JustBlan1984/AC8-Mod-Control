@@ -1,8 +1,12 @@
-AC8 Mod Control 1.1.2 - Single EXE
-Run AC8 Mod Control.exe. No separate Python or .NET installation is needed.
-The EXE contains the runtime and all 15 mod scripts. Microsoft .NET extracts its contents into your temporary .net cache on launch. UE4SS is still required separately.
-Use Back Up Current Save before applying changes. Open Backups shows your backups.
-Offline/single-player only. No antivirus or Nexus clearance is claimed for this build.
+AC8 Mod Control 1.2.0 Experimental 5
+Requires UE4SS Experimental v3.0.1-1152-ge3ba1016.
 
-Close the game, choose your options and click Apply Selected Mods once to install this update. Launch and load or create a campaign normally.
-Enter the campaign hangar and wait about 5–10 seconds before selecting an aircraft. If SP weapons or skins remain locked, select that aircraft, wait another 5–10 seconds, then back out and reopen its weapon/skin selection. The game must create each aircraft's loadout data before the mod can update it. No F7 press is normally needed. Let the game save normally.
+Close the game. Select ALL mods you want enabled. Enable MRP credits, then choose Custom amount (1 to 999,999,999) or Unlimited (999,999,999). Click Apply Selected Mods, which backs up the save and installs your selections. Unchecked mods are disabled.
+
+The amount is a target balance, not an increment. Higher existing balances remain. Unlimited is a large one-time balance, not an infinite/spending freeze. Credits wait for a stable campaign hangar. F6 reapplies the selected target; reopen the tree to refresh the display. Let the game save normally.
+
+Aircraft Tree is a separate option and does not enable Mission Access or grant parts purchases. Custom MRP was tested in game. The author confirmed Aircraft Tree purchases work and remain after saving. Not every node or campaign stage has been tested. Saved unlocks are not reversed by disabling mods.
+
+Apply once, then play: the launcher can be closed after installation. Keep UE4SS and the installed scripts in place. F10 opens the FOV overlay during unpaused flight. Reapply to update or change options or the MRP target. Keep the launcher outside the game folder if desired.
+For credits, allow about 10-15 seconds in the ready campaign hangar, then reopen the tree. For aircraft/loadouts, wait about 5-10 seconds; F7 is the manual fallback.
+No scan clearance is claimed for this binary. Offline/single-player only.

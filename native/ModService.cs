@@ -9,7 +9,7 @@ namespace AC8ModControl;
 
 public sealed class ModService
 {
-    public static readonly string[] Mods = ["AC8AdjustableFOV", "AC8AircraftUnlock", "AC8MissionUnlock"];
+    public static readonly string[] Mods = ["AC8AdjustableFOV", "AC8AircraftUnlock", "AC8MissionUnlock", "AC8CampaignCredits", "AC8CampaignTree"];
     public static readonly string[] Missions = ["Unlock ALL Missions", "Prologue", .. Enumerable.Range(1, 30).Select(n => $"Mission {n}")];
     public string Home { get; }
     public string Saves { get; }
@@ -96,10 +96,11 @@ public sealed class ModService
             Directory.CreateDirectory(Path.GetDirectoryName(dest)!); File.Copy(file, dest, true);
         }
     }
-    public string Install(string game, bool[] choices, string mode)
+    public string Install(string game, bool[] choices, string mode, uint mrpTarget = 999999999)
     {
         EnsureClosed();
         if (choices.Length != Mods.Length) throw new ArgumentException("Invalid mod selection.");
+        if (choices[3] && (mrpTarget < 1 || mrpTarget > 999999999)) throw new ArgumentOutOfRangeException(nameof(mrpTarget), "MRP must be between 1 and 999,999,999.");
         var mission = choices[2] ? MissionConfig(mode) : "";
         var binary = Path.Combine(Path.GetFullPath(game), "Game", "Binaries", "Win64");
         RejectLink(binary);
@@ -135,6 +136,7 @@ public sealed class ModService
                 text += "\n" + Mods[i] + " : " + (choices[i] ? "1" : "0") + "\n";
             }
             if (choices[2]) AtomicWrite(Path.Combine(target, Mods[2], "Scripts", "Mission-config.lua"), Utf8.GetBytes(mission));
+            if (choices[3]) AtomicWrite(Path.Combine(target, Mods[3], "Scripts", "Credits-config.lua"), Utf8.GetBytes("return {Target=" + mrpTarget.ToString(System.Globalization.CultureInfo.InvariantCulture) + "}\n"));
             AtomicWrite(config, Utf8.GetBytes(text));
         }
         catch (Exception failure)

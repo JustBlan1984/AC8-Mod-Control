@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AssemblyName>AC8 Mod Control</AssemblyName>
-    <Version>1.1.2</Version>
+    <Version>1.2.0-experimental.5</Version>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     <PublishSingleFile>true</PublishSingleFile><IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract><DebugType>none</DebugType><DebugSymbols>false</DebugSymbols>
     <PublishTrimmed>false</PublishTrimmed>

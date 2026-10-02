@@ -19,19 +19,21 @@ public sealed class LauncherForm : Form
     readonly Color panel = Color.FromArgb(11,23,16);
     readonly FlowLayoutPanel content = new() { Dock=DockStyle.Fill, FlowDirection=FlowDirection.TopDown, WrapContents=false, AutoScroll=true, Padding=new Padding(24) };
     readonly TextBox game = new();
-    readonly CheckBox[] choices = new CheckBox[3];
+    readonly CheckBox[] choices = new CheckBox[5];
     readonly ComboBox mission = new() { DropDownStyle=ComboBoxStyle.DropDownList, Width=340, MaxDropDownItems=12, IntegralHeight=false, DropDownHeight=280 };
-    readonly CheckBox noEac = new() { Text="No EAC launch — offline / single-player mods", AutoSize=true };
+    readonly ComboBox mrpMode = new() { DropDownStyle=ComboBoxStyle.DropDownList, Width=320, Enabled=false };
+    readonly NumericUpDown mrpAmount = new() { Minimum=1, Maximum=999999999, Value=1000000, ThousandsSeparator=true, Width=180, Enabled=false, AccessibleName="Custom MRP target" };
+    readonly CheckBox noEac = new() { Text="No EAC launch - offline / single-player mods", AutoSize=true };
     readonly Label status = new() { AutoSize=true, MaximumSize=new Size(710,0), Text="Ready. Close the game before applying changes." };
     bool busy;
     public LauncherForm()
     {
-        Text="AC8 | MOD CONTROL — 1.1.2"; ClientSize=new Size(840,920); MinimumSize=new Size(700,650);
+        Text="AC8 | MOD CONTROL - 1.2.0 EXPERIMENTAL 5"; ClientSize=new Size(840,920); MinimumSize=new Size(700,650);
         StartPosition=FormStartPosition.CenterScreen; BackColor=panel; ForeColor=green;
         Font=new Font("Segoe UI",10); AutoScaleMode=AutoScaleMode.Dpi;
         content.BackColor=panel; Controls.Add(content);
         AddLabel("AC8 / MOD CONTROL",24,true);
-        AddLabel("CRIMINALGAMER84 MODS   /   1.1.2   /   WINDOWS",10,true);
+        AddLabel("CRIMINALGAMER84 MODS   /   1.2.0 EXPERIMENTAL 5   /   WINDOWS",10,true);
         AddLabel("Configure once. Load your campaign, then let the game save normally.");
         var warning=AddLabel("USE AT YOUR OWN RISK\nFor offline / single-player use. Online use is not recommended and may result in account restrictions or bans."); warning.ForeColor=Color.FromArgb(227,187,112);
         Section("INSTALLATION");
@@ -40,11 +42,18 @@ public sealed class LauncherForm : Form
         game.Text=FindGame();
         Row(game,Button("Browse",()=> { using var dialog=new FolderBrowserDialog { Description="Select the ACE COMBAT 8 installation folder", UseDescriptionForTitle=true }; if (dialog.ShowDialog(this)==DialogResult.OK) game.Text=dialog.SelectedPath; }));
         Section("MOD SELECTION");
-        string[] labels=["FOV overlay — F10 in flight","Aircraft, skins and SP weapons — automatic repair","Mission access"];
-        for(int i=0;i<3;i++) { choices[i]=new CheckBox { Text=labels[i],Checked=false,AutoSize=true,Margin=new Padding(0,7,0,7) }; content.Controls.Add(choices[i]); }
+        string[] labels=["FOV overlay - F10 in flight","Aircraft, skins and SP weapons - automatic repair","Mission access", "MRP credits - choose amount below", "Aircraft Tree access (purchases separate)"];
+        for(int i=0;i<5;i++) { choices[i]=new CheckBox { Text=labels[i],Checked=false,AutoSize=true,Margin=new Padding(0,7,0,7) }; content.Controls.Add(choices[i]); }
         mission.Items.AddRange(ModService.Missions); mission.SelectedIndex=0; mission.Enabled=false; content.Controls.Add(mission);
         choices[2].CheckedChanged+=(_,_)=>mission.Enabled=choices[2].Checked;
-        AddLabel("Also enables campaign features including Free Mission, Free Flight and Data Viewer. Existing later unlocks remain. Cutoffs after Mission 6 still need in-game verification.");
+        AddLabel("Mission Access also enables campaign features including Free Mission, Free Flight and Data Viewer. Existing later unlocks remain. Cutoffs after Mission 6 still need in-game verification.");
+        AddLabel("Credit and tree options run once per Apply. Credits wait for the hangar; F6 retries, then back out and reopen the tree. They do not unlock missions. Existing higher credit balances are preserved. Tree access does not grant purchased parts.");
+        Section("MRP AMOUNT");
+        mrpMode.Items.AddRange(new object[]{"Custom amount", "Unlimited (999,999,999)"}); mrpMode.SelectedIndex=0;
+        Row(mrpMode,mrpAmount);
+        choices[3].CheckedChanged+=(_,_)=> { mrpMode.Enabled=choices[3].Checked; mrpAmount.Enabled=choices[3].Checked && mrpMode.SelectedIndex==0; };
+        mrpMode.SelectedIndexChanged+=(_,_)=>mrpAmount.Enabled=choices[3].Checked && mrpMode.SelectedIndex==0;
+        AddLabel("Target balance, not an added amount. Higher balances are preserved. Unlimited sets 999,999,999 once; purchases still spend MRP. F6 reapplies your chosen target in the hangar.");
         Section("LAUNCH MODE"); content.Controls.Add(noEac);
         AddLabel("Unchecked: Steam launch using your existing settings. This option does not remove EAC or change Steam settings.");
         Section("DLSS / GRAPHICS");
@@ -53,7 +62,7 @@ public sealed class LauncherForm : Form
         Section("SAVE BACKUP / APPLY");
         Row(Button("Back Up Current Save",()=>RunWork(()=>"Backup verified: "+service.Backup())),Button("Open Backups",()=> { Directory.CreateDirectory(service.Backups); Process.Start(new ProcessStartInfo(service.Backups){UseShellExecute=true}); }));
         Row(Button("Apply Selected Mods",Apply),Button("Launch Game",Launch));
-        AddLabel("Requires UE4SS and a campaign save. Enter the hangar and wait about 5–10 seconds. If SP weapons or skins remain locked, select the aircraft, wait another 5–10 seconds, then back out and reopen its loadout. F7 is a manual fallback. Unchecking a mod does not reverse saved unlocks.");
+        AddLabel("EXPERIMENTAL BUILD: Custom MRP was tested in game. The author confirmed Aircraft Tree purchases work and remain after saving. Not every node or campaign stage has been tested. The game may also require a story milestone; its mission number is not confirmed. Requires UE4SS Experimental v3.0.1-1152-ge3ba1016 and a campaign save. For credits, allow about 10-15 seconds in the ready campaign hangar and reopen the tree. For aircraft, wait about 5-10 seconds. If SP weapons or skins remain locked, select the aircraft, wait another 5-10 seconds, then back out and reopen its loadout. F7 is a manual fallback. Unchecking a mod does not reverse saved unlocks.");
         status.ForeColor=Color.FromArgb(213,232,207); status.Margin=new Padding(0,16,0,20); content.Controls.Add(status);
         content.SizeChanged+=(_,_)=> { int width=Math.Max(500,content.ClientSize.Width-70); foreach(Control c in content.Controls) if(c is Label label) label.MaximumSize=new Size(width,0); game.Width=Math.Max(340,width-115); };
         FormClosing+=(_,e)=> { if(busy) { e.Cancel=true; MessageBox.Show(this,"Please wait for the current operation to finish before closing.","AC8 Mod Control"); } };
@@ -89,7 +98,7 @@ public sealed class LauncherForm : Form
     }
     async void RunWork(Func<string> operation)
     {
-        busy=true; content.Enabled=false; UseWaitCursor=true; status.Text="Working…";
+        busy=true; content.Enabled=false; UseWaitCursor=true; status.Text="Working...";
         try { status.Text=await Task.Run(operation); }
         catch(Exception ex) { ShowError(ex); }
         finally { busy=false; content.Enabled=true; UseWaitCursor=false; }
@@ -98,7 +107,8 @@ public sealed class LauncherForm : Form
     void Apply()
     {
         string folder=game.Text; bool[] selected=choices.Select(c=>c.Checked).ToArray(); string mode=mission.SelectedItem!.ToString()!;
-        RunWork(()=>"Installed. Save backup verified: "+service.Install(folder,selected,mode)+"\nLaunch and load your campaign to apply.");
+        uint target=mrpMode.SelectedIndex==1?999999999u:(uint)mrpAmount.Value;
+        RunWork(()=>"Installed. Save backup verified: "+service.Install(folder,selected,mode,target)+"\nLaunch and load your campaign to apply.");
     }
     void Launch()
     {
