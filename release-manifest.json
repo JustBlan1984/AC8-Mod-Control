@@ -1,27 +1,18 @@
 {
-  "release": "1.0.0",
-  "python": "3.14.7",
-  "platform": "Windows x64",
-  "original_artifacts": {
-    "AC8-Mod-Control-1.0.0.zip": "920b762f86084f1b2b1d46a8c53cc2abacd45ee7e9254b0a58f5b260c5324e30",
-    "AC8 Mod Launcher.exe": "65cc6c8b43790a9c334b4fc11cc732d1058747b6aa3f965353fdaf99ecd79e16"
-  },
-  "source_sha256": {
-    "src/bundled/AC8AdjustableFOV/Scripts/FOV-config.lua": "830d154d453ca603c8ede1f82a4091d1f89da1a030ebc48e4fd856a947edec0f",
-    "src/bundled/AC8AdjustableFOV/Scripts/FOV-memory.lua": "120bed6a9e7d0001fb502c35f6bb660fa6dfd8abb7f1093370a0d1ed5c4deaf5",
-    "src/bundled/AC8AdjustableFOV/Scripts/FOV-overlay.lua": "b914ebe8b2e41d7ca52004a9fa8795acbe8c8732a712afc5be36077d13cc5517",
-    "src/bundled/AC8AdjustableFOV/Scripts/main.lua": "7dce00c7a7d957953fdc8d1faa2f8b859f9c60413d5d1fd691c5c2f57c0c7459",
-    "src/bundled/AC8AircraftUnlock/Scripts/Aircraft-visibility.lua": "96918145f296c8f60602faaaa8cdae2400768cd92c0c5277183d74d8f6203e0f",
-    "src/bundled/AC8AircraftUnlock/Scripts/Campaign-ready.lua": "ac3c4c3e9025a58461c0192b1a8b1d05d31b64723b315f68850cce39a4cecfd6",
-    "src/bundled/AC8AircraftUnlock/Scripts/DLC-load-support.lua": "5c27f5fe99f83cb8d88794214ad805cf9a481732480a264fb4a6ee607f95ecd9",
-    "src/bundled/AC8AircraftUnlock/Scripts/Loadout-fix.lua": "bf4dcdfbc05e39f44da9a9a2f2060a9197bb202cce5da3ff5b32da6816684bd2",
-    "src/bundled/AC8AircraftUnlock/Scripts/main.lua": "ea008d1277bd8d6fdf7d4c2f6129217eb879ca5bd9c6aa9597dd483a25b1f933",
-    "src/bundled/AC8AircraftUnlock/Scripts/Skin-menu-fix.lua": "112ef14c4e2b762a800bf769994d830f27c079badf602c02e4cf90106dbc9ced",
-    "src/bundled/AC8AircraftUnlock/Scripts/Unlock-config.lua": "1155220e006e9b8e80f6e43416de486cabafebf12f4ea7f85cdd0d076308e859",
-    "src/bundled/AC8AircraftUnlock/Scripts/Unlock-core.lua": "91841cd494d157a4550e7fd767ea211fee6237ee69a95d62d8afc2ae67109e83",
-    "src/bundled/AC8MissionUnlock/Scripts/Campaign-ready.lua": "ac3c4c3e9025a58461c0192b1a8b1d05d31b64723b315f68850cce39a4cecfd6",
-    "src/bundled/AC8MissionUnlock/Scripts/main.lua": "fbfcb173bdc2da4154e2e2d79ec41103d2ba8916a941ef6deefc7df57a46edda",
-    "src/bundled/AC8MissionUnlock/Scripts/Mission-config.lua": "1f092b07ba3746a3b4db662380fba5f5c689686e1b3fdaaaa54bbe8d4a0b75de",
-    "src/launcher.py": "a21729d35966ca73bc72753cf01c0d62e905ac88ddaec08f926b1fe3bb5c1a05"
-  }
+  "version": "1.2.0-experimental.5",
+  "source": "native",
+  "required_ue4ss": "3.0.1-1152-ge3ba1016",
+  "gameplay_scripts_unchanged_from": "1.2.0-experimental.4",
+  "exe_sha256": "479c8c45a74a6134b15bf60494d16d0fc0f9288388e4c314a2b95fccb9b17139",
+  "scan_status": "No exact-build clearance verified",
+  "artifacts": [
+    {
+      "sha256": "c81ca4ad9acc3a05536d40688b481c061ea7194c4303109d579635256d4e9f6d",
+      "name": "AC8-Mod-Control-1.2.0-experimental.5-source.zip"
+    },
+    {
+      "sha256": "5bcadd2e8a3492b3aebe810cff86ee0267650c05c8460e2e3cd28aa4b70d16e1",
+      "name": "AC8-Mod-Control-1.2.0-experimental.5.zip"
+    }
+  ]
 }
