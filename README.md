@@ -1,10 +1,10 @@
 # CriminalGamer84's AC8 Mod Control
 
-## 1.2.0 Experimental 4 — Custom MRP and Aircraft Tree
+## 1.2.0 Experimental 5 — Custom MRP and Aircraft Tree
 
-**[Download the current build and matching source](https://github.com/JustBlan1984/AC8-Mod-Control/releases/tag/v1.2.0-experimental.4)** · [Nexus Mods](https://www.nexusmods.com/acecombat8wingsoftheve/mods/9)
+**[Download the current build and matching source](https://github.com/JustBlan1984/AC8-Mod-Control/releases/tag/v1.2.0-experimental.5)** · [Nexus Mods](https://www.nexusmods.com/acecombat8wingsoftheve/mods/9)
 
-Download **AC8-Mod-Control-1.2.0-experimental.4.zip**, extract it, and run **AC8 Mod Control.exe**. This single Windows EXE includes its .NET runtime and mod scripts. No separate Python or .NET installation is needed. UE4SS must be installed separately.
+Download **AC8-Mod-Control-1.2.0-experimental.5.zip**, extract it, and run **AC8 Mod Control.exe**. This single Windows EXE includes its .NET runtime and mod scripts. No separate Python or .NET installation is needed. UE4SS must be installed separately.
 
 ### Required UE4SS version
 
@@ -49,17 +49,17 @@ Credits apply once per Apply after a stable campaign hangar is available. Allow 
 
 The author confirmed MRP and Aircraft Tree functionality, successful purchases, and that purchases remain after saving. Desktop testing visibly confirmed a custom **999,980,000 MRP** balance and preservation of a higher balance when a lower target was chosen. Installer checks passed for independent options, backups, custom/preset configuration and invalid target rejection.
 
-This remains experimental; every node, campaign stage and feature combination has not been tested. The exact tested EXE is published unchanged. Its embedded guide/footer predates the latest confirmation and still describes some tests as pending; these notes contain the current status.
+This remains experimental; every node, campaign stage and feature combination has not been tested. Experimental 5 updates version labels and the embedded guide/footer. Gameplay scripts are identical to Experimental 4; the refreshed build passed the installer checks.
 
 ### Source and build instructions
 
-Use **AC8-Mod-Control-1.2.0-experimental.4-source.zip** attached to the [current release](https://github.com/JustBlan1984/AC8-Mod-Control/releases/tag/v1.2.0-experimental.4) for the complete matching C#/Lua source, tests, licenses and **BUILD.md**. Use .NET SDK 10.0.401. Source archives are for building/review, not the playable download.
+Use **AC8-Mod-Control-1.2.0-experimental.5-source.zip** attached to the [current release](https://github.com/JustBlan1984/AC8-Mod-Control/releases/tag/v1.2.0-experimental.5) for the complete matching C#/Lua source, tests, licenses and **BUILD.md**. Use .NET SDK 10.0.401. Source archives are for building/review, not the playable download.
 
-The repository's native/ directory and automatically generated tag source archives currently retain the earlier launcher source. The explicitly named Experimental 4 source ZIP is the authoritative source package for this release. Historical Python code and review records remain in src/, docs/ and the root build/manifest files.
+The current C#/Lua source is in native/ and in the matching release source ZIP. See native/BUILD.md. Historical Python code and review records remain in src/ and docs/ for older releases; they are not the current launcher.
 
 ### Scan disclosure
 
-**No VirusTotal result or Nexus approval has been verified for this exact Experimental 4 binary.** Earlier versions had unresolved detections and Nexus quarantine; those reports do not describe this file. No false-positive clearance is claimed. Keep antivirus enabled. SHA256SUMS.txt identifies the release files; checksums do not certify safety.
+**No VirusTotal result or Nexus approval has been verified for this exact Experimental 5 binary.** Earlier versions had unresolved detections and Nexus quarantine; those reports do not describe this file. No false-positive clearance is claimed. Keep antivirus enabled. SHA256SUMS.txt identifies the release files; checksums do not certify safety.
 
 ### Credits
 
