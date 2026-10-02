@@ -21,7 +21,7 @@ Features include mission access, aircraft/skin/SP weapon unlocks, FOV overlay, v
 
 The author confirmed successful in-game testing of this single EXE on October 1, 2026. All 30 isolated checks passed. Standalone startup and all 15 extracted Lua files were verified. This does not establish exhaustive testing of every feature or aircraft.
 
-Nexus displayed scanning in progress when 1.1.1 was uploaded. No antivirus clearance is claimed for this EXE. Earlier scan reports concern different files; changing packaging does not prove previous detections were false positives.
+Nexus has quarantined the 1.1.1 EXE. On October 1, 2026, [VirusTotal reported 1/70 detections](https://www.virustotal.com/gui/file/056b53e8b2d5d1ef3997c045809b9ac6e0828e4d0bd87597a591fc930555faa1): **Bkav Pro — W32.Malware.B0B0BDAF**. Microsoft reported **Undetected**. The cause remains unresolved; no false positive or security clearance has been confirmed. Earlier reports concern different files. Keep antivirus protection enabled.
 
 ### Source and credits
 
