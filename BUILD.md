@@ -1,5 +1,3 @@
-# Build the current launcher
+# Build AC8 Mod Control 1.2.0
 
-The current C#/Lua application is in native/. Follow [native/BUILD.md](native/BUILD.md) using .NET SDK 10.0.401.
-
-The root requirements-build.txt, tools/ and src/ describe the historical Python launcher and are retained for reviewing older releases. They are not used to build the current Windows launcher.
+Download AC8-Mod-Control-1.2.0-source.zip from https://github.com/JustBlan1984/AC8-Mod-Control/releases/tag/v1.2.0 and follow the BUILD.md included in that archive.

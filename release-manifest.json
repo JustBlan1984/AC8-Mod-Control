@@ -1,18 +1,16 @@
 {
-  "version": "1.2.0-experimental.5",
-  "source": "native",
-  "required_ue4ss": "3.0.1-1152-ge3ba1016",
-  "gameplay_scripts_unchanged_from": "1.2.0-experimental.4",
-  "exe_sha256": "479c8c45a74a6134b15bf60494d16d0fc0f9288388e4c314a2b95fccb9b17139",
-  "scan_status": "No exact-build clearance verified",
+  "version": "1.2.0",
+  "source": "release asset AC8-Mod-Control-1.2.0-source.zip",
+  "required_ue4ss": "latest experimental",
+  "exe_sha256": "d66413e17010f29be2db3c93857ca3cf264649e4171e77df7be74ebe3ba7d016",
   "artifacts": [
     {
-      "sha256": "c81ca4ad9acc3a05536d40688b481c061ea7194c4303109d579635256d4e9f6d",
-      "name": "AC8-Mod-Control-1.2.0-experimental.5-source.zip"
+      "name": "AC8-Mod-Control-1.2.0.zip",
+      "sha256": "e9b14335497732a49d83eb7be4559df7beea192308a0132e374f227195fb609e"
     },
     {
-      "sha256": "5bcadd2e8a3492b3aebe810cff86ee0267650c05c8460e2e3cd28aa4b70d16e1",
-      "name": "AC8-Mod-Control-1.2.0-experimental.5.zip"
+      "name": "AC8-Mod-Control-1.2.0-source.zip",
+      "sha256": "877d4a466fd5b29e1bfe7fec32da46c631ae6fecbc176a3255f37dacc5efa814"
     }
   ]
 }
