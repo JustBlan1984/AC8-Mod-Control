@@ -6,7 +6,7 @@ return function(directory,target)
  assert(#managers==1,'Campaign manager unavailable')
  local save=managers[1].CampaignSaveGame
  assert(save:IsValid() and save.SavedVersion==38,'Unsupported save')
- assert(assert(loadfile(directory..'Hangar-ready.lua'))()(),'Open the campaign hangar before adding credits')
+ assert(assert(loadfile(directory..'Session-ready.lua'))()(),'Campaign is not loaded yet')
  local data=save.CommonSaveData
  local before=data.CurrentMRP
  local after=core.credits(before,target)

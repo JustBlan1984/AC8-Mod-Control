@@ -9,13 +9,13 @@ local function attempt(manual)
  local queued,why=pcall(ExecuteInGameThread,function()
   local ok,result=pcall(function()
    assert(assert(loadfile(directory..'Campaign-ready.lua'))()(),'Campaign not ready')
-   assert(assert(loadfile(directory..'Hangar-ready.lua'))()(),'Waiting for campaign hangar')
+   assert(assert(loadfile(directory..'Session-ready.lua'))()(),'Waiting for loaded campaign')
    local save=FindAllOf('LiveSaveDataManager')[1].CampaignSaveGame
    local signature=tostring(save:GetAddress())..':'..tostring(save.CommonSaveData.CurrentMRP)
    if not manual then
-    if signature~=last then last=signature;stable=0;return 'Waiting for stable hangar balance' end
+    if signature~=last then last=signature;stable=0;return 'Waiting for stable campaign balance' end
     stable=stable+1
-    if stable<2 then return 'Waiting for stable hangar balance' end
+    if stable<2 then return 'Waiting for stable campaign balance' end
    end
    local config=assert(loadfile(directory..'Credits-config.lua'))()
    assert(type(config)=='table' and type(config.Target)=='number' and config.Target>=1 and config.Target<=999999999 and config.Target%1==0,'Invalid MRP target')
@@ -41,4 +41,4 @@ LoopAsync(5000,function()
  if not request then return true end
  request:close();attempt(false);return false
 end)
-log('Credits queued by Apply; waits for a stable campaign hangar. F6 adds credits on demand in the hangar.')
+log('Credits queued by Apply; waits for a loaded campaign. F6 adds credits on demand after the campaign loads.')
