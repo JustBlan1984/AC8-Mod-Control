@@ -6,15 +6,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AssemblyName>AC8 Mod Control</AssemblyName>
-    <Version>1.2.0-experimental.5</Version>
-    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <Version>1.4.0</Version>
+    <ApplicationIcon>assets/ModIcon.ico</ApplicationIcon><ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     <PublishSingleFile>true</PublishSingleFile><IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract><DebugType>none</DebugType><DebugSymbols>false</DebugSymbols>
     <PublishTrimmed>false</PublishTrimmed>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="tests/**/*.cs" />
+    <EmbeddedResource Include="assets/BrandBanner.png" LogicalName="AC8.BrandBanner.png" />
+    <EmbeddedResource Include="assets/ModIcon.ico" LogicalName="AC8.ModIcon.ico" /><Compile Remove="tests/**/*.cs" />
     <Content Include="bundled/**/*" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   <Content Include="notices/**/*" CopyToPublishDirectory="PreserveNewest" /><Content Include="HOW TO USE.txt" CopyToPublishDirectory="PreserveNewest" /></ItemGroup>
 </Project>
+
 
 

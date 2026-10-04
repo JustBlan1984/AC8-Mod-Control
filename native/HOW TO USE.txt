@@ -1,12 +1,45 @@
-AC8 Mod Control 1.2.0 Experimental 5
-Requires UE4SS Experimental v3.0.1-1152-ge3ba1016.
+AC8 MOD CONTROL - 1.4.0
 
-Close the game. Select ALL mods you want enabled. Enable MRP credits, then choose Custom amount (1 to 999,999,999) or Unlimited (999,999,999). Click Apply Selected Mods, which backs up the save and installs your selections. Unchecked mods are disabled.
+QUICK START
+1. Install the latest experimental UE4SS build in the game first (the stable release is not supported).
+2. For a fresh game, start a campaign once and let it save, then close the game.
+3. Select your game folder, choose your mods, and click Apply Selected Mods.
+4. Check No EAC launch and click Launch Game for this first application.
+5. Load your campaign and let the game save normally.
 
-The amount is a target balance, not an increment. Higher existing balances remain. Unlimited is a large one-time balance, not an infinite/spending freeze. Credits wait for a stable campaign hangar. F6 reapplies the selected target; reopen the tree to refresh the display. Let the game save normally.
+After the first application, launch normally from your usual shortcut. You do not need to open the mod launcher or select No EAC for every game launch. Return here only to apply new changes.
 
-Aircraft Tree is a separate option and does not enable Mission Access or grant parts purchases. Custom MRP was tested in game. The author confirmed Aircraft Tree purchases work and remain after saving. Not every node or campaign stage has been tested. Saved unlocks are not reversed by disabling mods.
+MOD OPTIONS
+Skins Access: base-game skins for regular aircraft you own.
+Mission access: all missions, or through the selected mission.
+MRP credits: sets a minimum balance. Purchases spend credits normally.
+Aircraft Tree access: opens the full regular tree for purchases and enables Aircraft Set and Parts for fresh campaigns.
+Unlock All Skills and Weapons: grants tree parts and special weapons for owned aircraft. Equip parts through Aircraft Set.
+FOV / HUD overlay: press F9 during flight.
+Use the arrows to adjust score/time, radar, weapons and radio portrait positions.
+Ultrawide Preset moves the corner panels outward for your display shape.
+Use the size sliders to resize each panel. The radar indicator and quick commands follow the radar.
+The separate counterclockwise arrow buttons reset position or size. Reset All HUD restores all four panels.
+Drag the overlay by its title bar to move it.
+Positions and sizes save automatically. Center flight instruments remain unchanged.
 
-Apply once, then play: the launcher can be closed after installation. Keep UE4SS and the installed scripts in place. F10 opens the FOV overlay during unpaused flight. Reapply to update or change options or the MRP target. Keep the launcher outside the game folder if desired.
-For credits, allow about 10-15 seconds in the ready campaign hangar, then reopen the tree. For aircraft/loadouts, wait about 5-10 seconds; F7 is the manual fallback.
-No scan clearance is claimed for this binary. Offline/single-player only.
+Applying mods automatically backs up your save. Offline / single-player.
+
+HUD COLOR AND SIZING - 1.4.0
+Center HUD and corner-panel size sliders scale around their centers.
+Wingman Box size and visibility controls keep wingman names visible.
+Open HUD COLOR to select one of 14 supported groups (12 entries per page).
+Drag the wheel, adjust brightness, or enter R/G/B values from 0-255 and press SET.
+ALL HUD changes the shared color and clears individual overrides.
+USE ALL HUD COLOR makes only the selected group inherit the shared color.
+Each circular-arrow reset restores that group's original game colors.
+The reset next to HUD COLOR restores all original colors.
+Color choices save automatically in HUD-color-profiles.ini.
+
+Supported entries: All HUD, Score/Target text, Timer, Center HUD, Radar grid,
+Weapon counts, Aircraft icon, Portrait border, D-pad, Wingman arrows,
+Offscreen names, Wingman boxes, Callsigns, and Wingman names.
+Score/Target text refers to the score panel, not the enemy aircraft label.
+Enemy boxes, selected enemy aircraft names, lock indicators, and other
+unresolved HUD elements are not yet individual color controls.
+Experimental UE4SS remains required for this tested configuration.

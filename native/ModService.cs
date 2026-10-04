@@ -9,7 +9,7 @@ namespace AC8ModControl;
 
 public sealed class ModService
 {
-    public static readonly string[] Mods = ["AC8AdjustableFOV", "AC8AircraftUnlock", "AC8MissionUnlock", "AC8CampaignCredits", "AC8CampaignTree"];
+    public static readonly string[] Mods = ["AC8AdjustableFOV", "AC8MissionUnlock", "AC8CampaignCredits", "AC8CampaignTree", "AC8CampaignSkills", "AC8SkinsAccess"];
     public static readonly string[] Missions = ["Unlock ALL Missions", "Prologue", .. Enumerable.Range(1, 30).Select(n => $"Mission {n}")];
     public string Home { get; }
     public string Saves { get; }
@@ -43,7 +43,7 @@ public sealed class ModService
         if (mode == Missions[0]) return "return {Mode=\"all\",CampaignAccess=true,FreeMissionAccess=true,AutoApply=true}\n";
         int last = mode == "Prologue" ? 1 : Array.IndexOf(Missions, mode);
         if (last < 1) throw new ArgumentException("Choose a mission from the list.");
-        return $"return {{Mode=\"internal_through\",ThroughID={last},CampaignAccess=true,FreeMissionAccess=true,AutoApply=true}}\n";
+        return $"return {{Mode=\"internal_through\",ThroughID={last},EnforceLimit=true,CampaignAccess=true,FreeMissionAccess=true,AutoApply=true}}\n";
     }
     static void RejectLink(string path)
     {
@@ -100,8 +100,8 @@ public sealed class ModService
     {
         EnsureClosed();
         if (choices.Length != Mods.Length) throw new ArgumentException("Invalid mod selection.");
-        if (choices[3] && (mrpTarget < 1 || mrpTarget > 999999999)) throw new ArgumentOutOfRangeException(nameof(mrpTarget), "MRP must be between 1 and 999,999,999.");
-        var mission = choices[2] ? MissionConfig(mode) : "";
+        if (choices[2] && (mrpTarget < 1 || mrpTarget > 999999999)) throw new ArgumentOutOfRangeException(nameof(mrpTarget), "MRP must be between 1 and 999,999,999.");
+        var mission = choices[1] ? MissionConfig(mode) : "";
         var binary = Path.Combine(Path.GetFullPath(game), "Game", "Binaries", "Win64");
         RejectLink(binary);
         if (!File.Exists(Path.Combine(binary, "AceCombat8.exe"))) throw new IOException("Select the ACE COMBAT 8 installation folder.");
@@ -135,8 +135,14 @@ public sealed class ModService
                 text = Regex.Replace(text, @"^\s*" + Regex.Escape(Mods[i]) + @"\s*:[^\r\n]*\r?\n?", "", RegexOptions.Multiline);
                 text += "\n" + Mods[i] + " : " + (choices[i] ? "1" : "0") + "\n";
             }
-            if (choices[2]) AtomicWrite(Path.Combine(target, Mods[2], "Scripts", "Mission-config.lua"), Utf8.GetBytes(mission));
-            if (choices[3]) AtomicWrite(Path.Combine(target, Mods[3], "Scripts", "Credits-config.lua"), Utf8.GetBytes("return {Target=" + mrpTarget.ToString(System.Globalization.CultureInfo.InvariantCulture) + "}\n"));
+            text = Regex.Replace(text, @"^\s*AC8AircraftUnlock\s*:[^\r\n]*\r?\n?", "", RegexOptions.Multiline);
+            text += "\nAC8AircraftUnlock : 0\n";
+            foreach(var retired in new[]{"AC8ExtraAircraft", "AC8ExtraAircraftPurchaseTest", "AC8ProgressionDiagnostic", "AC8CompatibilityDiagnostic", "AC8ExtraAircraftInspector"}) {
+                text = Regex.Replace(text, @"^\s*" + Regex.Escape(retired) + @"\s*:[^\r\n]*\r?\n?", "", RegexOptions.Multiline);
+                text += "\n" + retired + " : 0\n";
+            }
+            if (choices[1]) AtomicWrite(Path.Combine(target, Mods[1], "Scripts", "Mission-config.lua"), Utf8.GetBytes(mission));
+            if (choices[2]) AtomicWrite(Path.Combine(target, Mods[2], "Scripts", "Credits-config.lua"), Utf8.GetBytes("return {Target=" + mrpTarget.ToString(System.Globalization.CultureInfo.InvariantCulture) + "}\n"));
             AtomicWrite(config, Utf8.GetBytes(text));
         }
         catch (Exception failure)
@@ -211,3 +217,4 @@ public sealed class ModService
         return info;
     }
 }
+
