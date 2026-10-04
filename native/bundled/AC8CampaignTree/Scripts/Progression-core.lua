@@ -18,7 +18,7 @@ function M.tree(existing,catalog,selected)
   if not seen[id] then out[#out+1]=id;seen[id]=true end
  end
  for _,id in ipairs(selected) do
-  integer(id,32767)
+  integer(id,4294967294)
   assert(catalog[id]==true,'Node is not in the verified campaign catalog')
   if not seen[id] then out[#out+1]=id;seen[id]=true end
  end

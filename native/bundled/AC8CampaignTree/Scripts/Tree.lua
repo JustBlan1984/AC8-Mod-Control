@@ -1,4 +1,4 @@
--- Development only. Enables campaign tree access; purchases remain separate.
+-- Enables campaign tree and customization access; purchases remain separate.
 return function(directory)
  local core=assert(loadfile(directory..'Progression-core.lua'))()
  assert(assert(loadfile(directory..'Campaign-ready.lua'))()(),'Campaign is not ready')
@@ -11,10 +11,11 @@ return function(directory)
  assert(dt:GetRowStruct():GetFullName()=='ScriptStruct /Script/Live.LiveMenuAircraftTreeNodeDataTable','Unexpected tree catalog')
  local catalog,selected={},{}
  for _,row in pairs(dt:GetRowMap()) do
-  local id=row.NodeID
-  assert(type(id)=='number' and id%1==0 and id>=0 and id<=32767,'Invalid node')
+  -- Despite the save field name, native purchases store ReferenceId, not NodeID.
+  local id=row.ReferenceId
+  assert(type(id)=='number' and id%1==0 and id>0 and id<4294967295,'Invalid tree reference')
   assert(row.NodeType==0 or row.NodeType==1,'Unknown node type')
-  assert(not catalog[id],'Duplicate node ID')
+  assert(not catalog[id],'Duplicate tree reference')
   catalog[id]=true;selected[#selected+1]=id
  end
  assert(#selected>0 and #selected<1000,'Unexpected tree size')
@@ -25,7 +26,9 @@ return function(directory)
  local after=core.tree(before,catalog,selected)
  local campaign=save.CampaignSaveData
  local flags=campaign.FeatureFlagMask
- local nextFlags=flags | (1 << 3)
+ -- Native ELiveFeature: AircraftSet=2, AircraftTree=3, Part=6. Purchasing parts alone does
+ -- not release their equip menu on a fresh campaign.
+ local nextFlags=flags | (1 << 2) | (1 << 3) | (1 << 6)
  local f=assert(io.open(directory..'tree-before-'..os.date('%Y%m%d-%H%M%S')..'.lua','w'))
  assert(f:write('return {FeatureFlagMask=',tostring(flags),',UnlockedAircraftTreeNodeIDs={',table.concat(before,','),'}}\n'))
  assert(f:close(),'Could not finish snapshot')
@@ -43,5 +46,5 @@ return function(directory)
   end)
   error(tostring(why)..'; restored='..tostring(restored))
  end
- return 'Campaign tree access: '..#selected..' catalog nodes; ownership and missions unchanged. Menu behavior requires verification.'
+ return 'Campaign tree access: '..#selected..' catalog references; Aircraft Set and Parts enabled.'
 end
