@@ -4,7 +4,7 @@
 -- Modifier names: CONTROL, ALT, SHIFT. Use {} for no modifier.
 -- Choose shortcuts not already used by the game or other mods.
 return {
-    Toggle   = { Key = "F10", Modifiers = {} },
+    Toggle   = { Key = "F9", Modifiers = {} },
     Wider    = { Key = "PAGE_UP",   Modifiers = {} },
     Narrower = { Key = "PAGE_DOWN", Modifiers = {} },
     Reset    = { Key = "END",       Modifiers = {} },

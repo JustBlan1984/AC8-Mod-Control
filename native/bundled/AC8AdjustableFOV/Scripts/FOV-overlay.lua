@@ -11,8 +11,14 @@ if supported and not _G.CG84DirectCameraRegistered then
     RegisterCustomProperty({Name='CG84CameraType',Type=PropertyTypes.ByteProperty,BelongsToClass='/Script/Live.LivePlayerPlane',OffsetInternal=0x18e0})
     _G.CG84DirectCameraRegistered=true
 end
+local hudLayout=assert(loadfile(directory..'HUD-layout.lua'))()
+_G.CG84HUDLayout=hudLayout
+local hudControls=assert(loadfile(directory..'HUD-controls.lua'))()
 -- CriminalGamer84 Mods - native Unreal HUD, no external renderer.
 return function(state, pc, memory, log, toggle)
+    local hudOK,hudError=true,nil
+    if not _G.CG84HUDLayoutTickedByMain then hudOK,hudError=pcall(hudLayout.tick,pc) end
+    if not hudOK and state.hudError~=tostring(hudError) then state.hudError=tostring(hudError);log(state.hudError) end
     local function valid(o) return o and o:IsValid() end
     local lib=StaticFindObject('/Script/UMG.Default__WidgetBlueprintLibrary')
     local gameplay=StaticFindObject('/Script/Engine.Default__GameplayStatics')
@@ -33,6 +39,11 @@ return function(state, pc, memory, log, toggle)
     end
 
     local function close(saveChanges)
+        _G.CG84HUDColorDragging=false
+        if state.hudControls and state.hudControls.sizeDirty then
+            local ok,err=hudLayout.save();state.hudControls.sizeDirty=false
+            if not ok then log('HUD size save failed: '..tostring(err)) end
+        end
         if valid(state.widget) then state.widget:SetVisibility(1) end
         state.visible=false
         state.previewOrigin=nil;state.previewPawn=nil;state.switchTarget=nil
@@ -97,7 +108,7 @@ return function(state, pc, memory, log, toggle)
         end
         image(150,684,870,1,green)
         label('5 degree steps / 50 - 150 / saved per view',150,701,865,34,19)
-        label((state.shortcut or 'F10')..': close and resume flight',150,744,865,32,19)
+        label((state.shortcut or 'F9')..': close and resume flight',150,744,865,32,19)
         widget:AddToViewport(10000)
         widget:SetVisibility(1)
         state.widget=widget;state.owner=pc:GetAddress()
@@ -162,16 +173,16 @@ return function(state, pc, memory, log, toggle)
             obj.Slot:SetPosition({X=x,Y=y});obj.Slot:SetSize({X=w,Y=h})
             obj:SetVisibility(visible or 0)
         end
-        place(canvas:GetChildAt(0),120,140,750,300,4)
-        place(canvas:GetChildAt(1),120,140,750,2,4)
-        place(canvas:GetChildAt(2),120,438,750,2,4)
+        place(canvas:GetChildAt(0),120,140,650,300,4)
+        place(canvas:GetChildAt(1),120,140,650,2,4)
+        place(canvas:GetChildAt(2),120,438,650,2,4)
         place(canvas:GetChildAt(3),120,140,2,300,4)
-        place(canvas:GetChildAt(4),868,140,2,300,4)
+        place(canvas:GetChildAt(4),768,140,2,300,4)
         local title=canvas:GetChildAt(5)
         title:SetText(text('[FOV]'))
         place(title,150,161,420,42,4)
         state.closeButton:GetChildAt(0):SetText(text('X'))
-        place(state.closeButton,800,158,44,42)
+        place(state.closeButton,700,158,44,42)
         for index,row in ipairs(state.rows) do
             local y=230+(index-1)*62
             row.caption=({'COCKPIT','HUD','CHASE'})[index]
@@ -188,9 +199,15 @@ return function(state, pc, memory, log, toggle)
             row.label:SetVisibility(1)
             place(row.select,150,y,240,44)
             place(row.minus,410,y,48,44)
-            place(row.value,478,y+6,125,36,4)
+            place(row.value,458,y+6,157,36,4)
+            row.value:SetJustification(1)
             place(row.plus,615,y,48,44)
-            place(row.reset,704,y,140,44)
+            place(row.reset,690,y,44,44)
+            row.reset:GetChildAt(0):SetText(text('↺'))
+            local resetLabel=row.reset:GetChildAt(0)
+            resetLabel:SetJustification(1)
+            resetLabel.Slot:SetHorizontalAlignment(2);resetLabel.Slot:SetVerticalAlignment(2)
+            resetLabel.Slot:SetPadding({Left=0,Top=0,Right=0,Bottom=0})
         end
     end
     if toggle then
@@ -211,6 +228,12 @@ return function(state, pc, memory, log, toggle)
         if not themeOk then log("Theme update: "..tostring(themeError)) end
         upgradeControls()
         compactLayout()
+        if not _G.CG84ColorCoverageCaptured then
+            local ok,result=pcall(function()return assert(loadfile(directory..'HUD-inventory.lua'))()(directory,pc)end)
+            if ok then _G.CG84ColorCoverageCaptured=true;log('HUD inventory captured: '..tostring(result)..' widgets.')
+            else log('HUD inventory failed: '..tostring(result)) end
+        end
+        hudControls(state,hudLayout,log,true,pc)
         local snapshot=memory.snapshot()
         for _,row in ipairs(state.rows) do
             row.last=snapshot[row.name] or 90;row.saved=snapshot[row.name]
@@ -222,11 +245,12 @@ return function(state, pc, memory, log, toggle)
         state.widget:SetVisibility(0);pc.bShowMouseCursor=true
         lib:SetInputMode_UIOnlyEx(pc,state.widget,0,false)
         state.visible=true
-        log('Live HUD opened; flight continues. '..(state.shortcut or 'F10')..' closes it.')
+        log('Live HUD opened; flight continues. '..(state.shortcut or 'F9')..' closes it.')
     end
     if not state.visible or not valid(state.widget) then return end
     if state.owner~=pc:GetAddress() then close(false);return end
     if state.closeButton:IsPressed() then close();return end
+    hudControls(state,hudLayout,log,false,pc)
     local pawn=pc.Pawn
     if state.switchTarget then
         local target=pawn[state.switchTarget]

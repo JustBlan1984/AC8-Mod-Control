@@ -75,6 +75,7 @@ return function(options)
         return view,manager
     end
     return {
+        resetSession=function() active=nil;owner=nil;ownsLock=false end,
         snapshot=function()
             local result={active=active}
             for _,name in ipairs(views) do result[name]=memory[name] end
