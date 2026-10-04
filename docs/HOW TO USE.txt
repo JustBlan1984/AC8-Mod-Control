@@ -1,36 +1,45 @@
-CRIMINALGAMER84'S AC8 MOD CONTROL 1.0.0
+AC8 MOD CONTROL - 1.4.0
 
 QUICK START
-1. Install a compatible, working UE4SS setup first. This download does not include UE4SS.
-2. If you have never started a campaign, start New Game once, let it initialize and save, then exit the game.
-3. Run AC8 Mod Launcher.exe and select your actual ACE COMBAT 8 installation folder.
-4. Choose your mods and click Apply Selected Mods. The game must be closed. Your current save is backed up automatically.
-5. For modded single-player, check No EAC launch and click Launch Game. Enter your campaign. Let the game save normally before exiting.
-6. Open the hangar normally to use aircraft, skins and weapons. No F4/F7 presses are required in the tested workflow.
+1. Install the latest experimental UE4SS build in the game first (the stable release is not supported).
+2. For a fresh game, start a campaign once and let it save, then close the game.
+3. Select your game folder, choose your mods, and click Apply Selected Mods.
+4. Check No EAC launch and click Launch Game for this first application.
+5. Load your campaign and let the game save normally.
 
-The launcher need not be opened on every play session, but its installed scripts must remain available for the FOV overlay, automatic loadout initialization, and DLC compatibility handling. Use a launch route compatible with your installed mods.
+After the first application, launch normally from your usual shortcut. You do not need to open the mod launcher or select No EAC for every game launch. Return here only to apply new changes.
 
-OPTIONS
-Mission access: Unlock ALL Missions is first, followed by Prologue and Mission 1 through Mission 30. Numbered choices are cumulative. Existing later unlocks are preserved, not removed. Also sets the Free Mission, Free Flight, Training, Music Player and Data Viewer feature flags. A feature flag does not guarantee every feature appears as a top-level menu entry.
-Aircraft, skins and SP weapons: combined selection. Ownership and skins apply automatically; weapon lists are repaired as the game creates aircraft records. No story completion, scores or achievements are fabricated by these scripts.
-FOV overlay: F10 during unpaused flight; Page Up/Page Down adjust, End resets. Saved independently per view.
-DLSS: Enable DLSS applies the supplied Streamline, DLSS Frame Generation and Reflex INI settings. Native NVIDIA DLSS Quality became selectable on the tested RTX 5070 Ti setup. Frame Generation and Reflex operation were not independently verified. Intended for use without a DLSS swapper.
-No EAC launch: direct single-player executable launch. Unchecked uses Steam's existing settings. Does not uninstall EAC or alter Steam launch options.
+MOD OPTIONS
+Skins Access: base-game skins for regular aircraft you own.
+Mission access: all missions, or through the selected mission.
+MRP credits: sets a minimum balance. Purchases spend credits normally.
+Aircraft Tree access: opens the full regular tree for purchases and enables Aircraft Set and Parts for fresh campaigns.
+Unlock All Skills and Weapons: grants tree parts and special weapons for owned aircraft. Equip parts through Aircraft Set.
+FOV / HUD overlay: press F9 during flight.
+Use the arrows to adjust score/time, radar, weapons and radio portrait positions.
+Ultrawide Preset moves the corner panels outward for your display shape.
+Use the size sliders to resize each panel. The radar indicator and quick commands follow the radar.
+The separate counterclockwise arrow buttons reset position or size. Reset All HUD restores all four panels.
+Drag the overlay by its title bar to move it.
+Positions and sizes save automatically. Center flight instruments remain unchanged.
 
-BACKUPS / REMOVAL
-Back Up Current Save creates a ZIP of the current Windows user's SaveGames directory. No author's save is included.
-Save and Engine.ini backups: %LOCALAPPDATA%\AC8 Mod Launcher\Backups
-Existing installed scripts: %LOCALAPPDATA%\AC8 Mod Launcher\Install-backup-<timestamp>
-Uncheck a mod and Apply Selected Mods to disable that script. Saved unlocks are not reversed. To revert progress changes, close the game and restore an appropriate backup manually, keeping a copy of the current save first. Take care with Steam Cloud conflicts.
-Disable DLSS tweak restores the previous Engine.ini only if it has not subsequently changed; otherwise restoration stops to preserve newer edits.
+Applying mods automatically backs up your save. Offline / single-player.
 
-COMPATIBILITY / TEST COVERAGE
-Developed on Windows against Steam build 25201480 and campaign save version 38. Requires the standard user-local save location. Game updates may require changes.
-Verified during testing: full mission list through Mission 30, Mission 3 gameplay load, FOV overlay, native DLSS menu availability, and user-confirmed populated aircraft/skin/weapon menus on the fresh-campaign test. Individual mission cutoffs after Mission 6 and every mission/aircraft combination have not been exhaustively tested.
-The mod initializes after entering a campaign, not merely reaching the title screen. If no changes appear, enter the campaign and check UE4SS.log before repeating installation. Manual diagnostic fallbacks remain F4 twice within 15 seconds for missions and F7 in the hangar for aircraft.
+HUD COLOR AND SIZING - 1.4.0
+Center HUD and corner-panel size sliders scale around their centers.
+Wingman Box size and visibility controls keep wingman names visible.
+Open HUD COLOR to select one of 14 supported groups (12 entries per page).
+Drag the wheel, adjust brightness, or enter R/G/B values from 0-255 and press SET.
+ALL HUD changes the shared color and clears individual overrides.
+USE ALL HUD COLOR makes only the selected group inherit the shared color.
+Each circular-arrow reset restores that group's original game colors.
+The reset next to HUD COLOR restores all original colors.
+Color choices save automatically in HUD-color-profiles.ini.
 
-USE AT YOUR OWN RISK
-Intended for offline/single-player use. Online use is not recommended and may result in restrictions or bans. You are responsible for how you use these mods. This does not fix multiplayer restrictions.
-
-CREDITS
-CriminalGamer84. UE4SS and its contributors provide the separately installed modding framework. The EXE uses Python, Tcl/Tk and PyInstaller; third-party notices are included where available. No game binaries, NVIDIA DLLs, UE4SS runtime, personal saves or logs are included.
+Supported entries: All HUD, Score/Target text, Timer, Center HUD, Radar grid,
+Weapon counts, Aircraft icon, Portrait border, D-pad, Wingman arrows,
+Offscreen names, Wingman boxes, Callsigns, and Wingman names.
+Score/Target text refers to the score panel, not the enemy aircraft label.
+Enemy boxes, selected enemy aircraft names, lock indicators, and other
+unresolved HUD elements are not yet individual color controls.
+Experimental UE4SS remains required for this tested configuration.
