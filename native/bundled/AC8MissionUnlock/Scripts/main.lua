@@ -2,6 +2,8 @@
 local dir=assert(debug.getinfo(1,'S').source:match('^@(.+[\\/])'))
 local helpers=require('UEHelpers')
 local pending=nil
+local policy=assert(loadfile(dir..'Mission-policy.lua'))()
+local menuReady=assert(loadfile(dir..'Menu-ready.lua'))()
 local function log(s) print('[AC8Missions] '..s..'\n') end
 local function notice(s)
  log(s)
@@ -30,6 +32,7 @@ local function merge(a,b)
  return out
 end
 local function prepare()
+ assert(menuReady(),'Waiting for loaded campaign menu or hangar')
  local managers=FindAllOf('LiveSaveDataManager') or {}
  assert(#managers==1,'Expected one campaign save manager')
  local save=managers[1].CampaignSaveGame
@@ -67,13 +70,26 @@ local function prepare()
  end
  assert(cfg.CampaignAccess==true or cfg.FreeMissionAccess==true,'No access lists selected')
  local c=save.CampaignSaveData
+ local completed={}
+ c.CompletedMissionList:ForEach(function(_,value)
+  local id=value:get().MissionID
+  assert(type(id)=='number' and id%1==0,'Invalid completed mission ID')
+  completed[#completed+1]=id
+ end)
+ local enforce=cfg.EnforceLimit==true and cfg.Mode~='all'
  local plans={}
  for _,field in ipairs({'UnlockedMissionIdList','UnlockedFreeMissionIDs'}) do
   if (field=='UnlockedMissionIdList' and cfg.CampaignAccess==true) or (field=='UnlockedFreeMissionIDs' and cfg.FreeMissionAccess==true) then
-   local old=array(c[field]);plans[#plans+1]={field=field,old=old,new=merge(old,ids)}
+   local old=array(c[field]);plans[#plans+1]={field=field,old=old,new=policy(old,ids,catalog,completed,enforce)}
   end
  end
- local signature=table.concat(ids,',')..'|'..tostring(cfg.CampaignAccess)..'|'..tostring(cfg.FreeMissionAccess)
+ if enforce and cfg.FreeMissionAccess then
+  local old=array(c.NewlyUnlockedFreeMissionIDs)
+  local allowed={};for _,p in ipairs(plans)do if p.field=='UnlockedFreeMissionIDs'then for _,id in ipairs(p.new)do allowed[id]=true end end end
+  local filtered={};for _,id in ipairs(old)do if allowed[id]then filtered[#filtered+1]=id end end
+  plans[#plans+1]={field='NewlyUnlockedFreeMissionIDs',old=old,new=filtered}
+ end
+ local signature=table.concat(ids,',')..'|'..tostring(cfg.CampaignAccess)..'|'..tostring(cfg.FreeMissionAccess)..'|'..tostring(enforce)..'|'..table.concat(completed,',')
  for _,p in ipairs(plans) do signature=signature..'|'..p.field..'='..table.concat(p.old,',') end
  return {save=save,data=c,plans=plans,signature=signature,numbers=numbers,ids=ids,catalog=catalog}
 end
