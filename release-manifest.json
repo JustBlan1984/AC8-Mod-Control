@@ -1,16 +1,16 @@
 {
-  "version": "1.2.0",
-  "source": "release asset AC8-Mod-Control-1.2.0-source.zip",
-  "required_ue4ss": "latest experimental",
-  "exe_sha256": "d66413e17010f29be2db3c93857ca3cf264649e4171e77df7be74ebe3ba7d016",
+  "version": "1.4.0",
+  "source": "native/; matching source release asset",
+  "required_ue4ss": "experimental (stable not validated)",
+  "exe_sha256": "080608d32db7da3ea16cfe2c8e3120c00344c7b4765150d350610ee7085d58dd",
   "artifacts": [
     {
-      "name": "AC8-Mod-Control-1.2.0.zip",
-      "sha256": "e9b14335497732a49d83eb7be4559df7beea192308a0132e374f227195fb609e"
+      "name": "AC8-Mod-Control-1.4.0.zip",
+      "sha256": "26da25bd74330d019c96b39b8c1084b41e618bff067b15c0e604469ad06fbb64"
     },
     {
-      "name": "AC8-Mod-Control-1.2.0-source.zip",
-      "sha256": "877d4a466fd5b29e1bfe7fec32da46c631ae6fecbc176a3255f37dacc5efa814"
+      "name": "AC8-Mod-Control-1.4.0-source.zip",
+      "sha256": "060fb69214839c28e14dc9358213255d32ac42077d8139b6e76ed77bbb9de61d"
     }
   ]
 }

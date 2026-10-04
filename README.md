@@ -1,66 +1,89 @@
 # CriminalGamer84's AC8 Mod Control
 
+**[Download AC8 Mod Control 1.4.0](https://github.com/JustBlan1984/AC8-Mod-Control/releases/tag/v1.4.0)** · [HUD guide](docs/HUD-GUIDE.md) · [Build from source](BUILD.md) · [Changelog](CHANGELOG.md)
 
-**[Download AC8 Mod Control 1.3.0](https://github.com/JustBlan1984/AC8-Mod-Control/releases/tag/v1.3.0)**
+A Windows launcher for ACE COMBAT 8 mods, with an in-game FOV overlay, HUD positioning and sizing, and custom HUD colors. Offline / single-player only.
 
+## New in 1.4.0
 
-## Required: latest experimental UE4SS
+- Center HUD scaling around its center, alongside the corner-panel controls.
+- Wingman W-box size and hide controls that keep names and callsigns visible.
+- A HUD Color list with **14 entries**, **12 per page**, and separate resets.
+- A smooth draggable wheel, brightness slider, and **0–255 RGB fields** with a Set button.
+- Independent colors, including timer digits and separate wingman arrows, names, callsigns, and boxes.
+- A full-height color panel matching the main overlay's borders and transparency, with stacked green RGB inputs.
+- A unified frame update path. The user confirmed the overlay and offscreen names working smoothly after the earlier callback failures.
 
+## Requirements and setup
 
-Install the **[latest experimental build of UE4SS](https://github.com/UE4SS-RE/RE-UE4SS/releases/tag/experimental-latest)** first. The stable UE4SS release is not supported. UE4SS is a separate download.
-
+Install **[experimental UE4SS](https://github.com/UE4SS-RE/RE-UE4SS/releases/tag/experimental-latest)** separately first. This configuration was tested with experimental UE4SS; stable has not been validated.
 
 Extract UE4SS into `ACE COMBAT 8/Game/Binaries/Win64`, next to `AceCombat8.exe`, keeping its `ue4ss` subfolder intact.
 
-
-## First-time setup
-
-
-1. Download **AC8-Mod-Control-1.3.0.zip**, extract it, and open **AC8 Mod Control.exe**. No separate Python or .NET installation is needed.
+1. Extract **AC8-Mod-Control-1.4.0.zip** and run **AC8 Mod Control.exe**. No separate Python or .NET installation is needed.
 2. For a fresh game, start a campaign once, let it save, then close the game.
-3. Select your ACE COMBAT 8 game folder, choose the mods you want, and click **Apply Selected Mods**.
-4. Check **No EAC launch** and click **Launch Game** for the first application.
+3. Select your game folder, keep the mod selections you want, and click **Apply Selected Mods**.
+4. Check **No EAC launch** and use **Launch Game** for the first application.
 5. Load your campaign and let the game save normally.
 
+After that, launch normally from your usual shortcut. Return to the launcher to apply changes. Close the game before updating. The launcher makes backups during application; keep your intended mod selections when updating.
 
-**After the first application, launch the game normally from your usual shortcut. The mod launcher and No EAC Launch do not need to be used every time.** Return to the launcher when you want to apply new changes.
+## FOV and HUD layout
 
+Press **F9 during flight** to open or close the overlay. Drag its title bar to move the menu.
 
-## New in 1.3.0
+- Set cockpit, HUD-view, and chase FOV independently.
+- Move and resize score/time, radar, weapons, and radio portrait panels.
+- Radar views, backgrounds, D-pad indicator, and quick commands follow their layout group.
+- Center HUD scaling keeps instruments centered and has no position controls.
+- Resize or hide wingman W boxes while keeping their text visible.
+- Separate circular-arrow buttons reset position and size. The ultrawide preset moves corner panels outward.
 
-- Move and resize the four corner HUD panels; center flight instruments stay unchanged.
-- Radar views, backgrounds, D-pad indicator and quick commands move together.
-- Radio portraits and their background move together.
-- Drag the overlay by its title bar. Use separate ↺ buttons to reset position or size.
-- Clean, evenly spaced controls with automatically saved positions and sizes.
-- The overlay hotkey is now **F9**, avoiding the F10 command-window conflict.
+Layout and colors save automatically. See the [HUD guide](docs/HUD-GUIDE.md) for detailed controls.
 
-## Options
+## HUD color list
 
+Select an entry, then drag the wheel, adjust brightness, or enter RGB values and press **Set**.
 
-- **FOV / HUD overlay:** press **F9** during flight. Adjust cockpit, HUD and chase FOV; move and resize score/time, radar, weapons and radio portraits.
-- **Skins Access:** unlocks base-game skins for regular aircraft you own.
-- **Mission access:** unlocks all missions or through your selected mission.
-- **MRP credits:** sets your chosen minimum balance; purchases still spend credits.
-- **Aircraft Tree access:** opens the regular aircraft tree for purchases, including its endgame branches, and enables **Aircraft Set** and **Parts** for fresh campaigns.
-- **Unlock All Skills and Weapons:** grants tree parts and special weapons for aircraft you own. Equip parts through **Aircraft Set**.
+| Entry | Scope |
+| --- | --- |
+| All HUD | Shared color for supported groups |
+| Score / Target | Score-panel text, not floating enemy aircraft labels |
+| Timer | Clock digits |
+| Center HUD | Supported center instruments |
+| Radar Grid | Radar frame/grid, not every contact symbol |
+| Weapon Counts | Weapon readouts |
+| Aircraft Icon | Aircraft silhouette; damage colors remain separate |
+| Portrait Border | Radio portrait border |
+| D-pad | Wingman-command indicator color path |
+| Wingman Arrows | Offscreen direction arrows |
+| Edge Names | Names beside offscreen arrows |
+| Wingman Boxes | Onscreen W boxes |
+| Callsigns | Onscreen JOKER labels |
+| Wingman Names | Onscreen personal names |
 
+**All HUD** changes the shared color and clears individual overrides. **Use All HUD Color** removes only the selected group's override. A group's **↺** restores its original game color; the reset beside HUD COLOR restores all original colors.
 
-Save backups are created automatically when applying mods. F-14A and ADFX-02 grants are not included in this release.
+## Other launcher options
 
+- Skins Access for base-game skins on regular aircraft you own.
+- Mission access: all missions or through the selected mission.
+- MRP credits: chosen minimum balance; purchases still spend credits.
+- Aircraft Tree access: regular aircraft purchases and Aircraft Set / Parts access.
+- Unlock All Skills and Weapons: tree parts and special weapons for owned aircraft.
 
-## Adjusting the HUD
+F-14A and ADFX-02 grants are not included.
 
-During flight, press **F9** to open or close the overlay. Use the arrows to move a panel and its slider to change size. **Ultrawide Preset** moves the corner panels outward. **Reset All HUD** restores all four panels. Your layout saves automatically.
+## Current limits
 
-## Source
+Enemy boxes, the selected enemy aircraft name, active-target arrows, missile-lock indicators, and other remaining markers are still being investigated. They are not individual color controls in this release. Some stores symbols and separate instrument lines may retain native colors.
 
+Wingman detection has been tested with JOKER 2/3/4 (Professor, Tasha, and Noise); other missions/localizations are not fully validated. User flight checks and local regression tests passed, but extended-session and every mission-transition stability are not established.
 
-For the complete matching source and build instructions, download **AC8-Mod-Control-1.3.0-source.zip** from the release page.
+## Source and verification
 
+The current launcher and scripts are in **[native/](native/)**. Download **AC8-Mod-Control-1.4.0-source.zip** for matching build source. Older Python implementation files remain for history and are not the 1.4.0 build target.
 
-Created by **CriminalGamer84 with AI assistance**. Thanks to the UE4SS and .NET contributors. Third-party notices are included.
+See [validation notes](docs/BUILD-VALIDATION.md), [release hashes](release-manifest.json), and [security-review information](docs/SECURITY-REVIEW.md). Hashes and tests do not constitute antivirus clearance.
 
-
-Offline / single-player only.
-
+Created by **CriminalGamer84 with AI assistance**. Thanks to UE4SS and .NET contributors. Third-party notices are included.
